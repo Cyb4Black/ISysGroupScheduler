@@ -5,20 +5,19 @@ import java.util.List;
 
 public class Student {
 	private int ID;
-	private List<Course> Courses;
+	private List<Course> Courses = new LinkedList<Course>();
 	private List<CourseSlot> MySlots = new LinkedList<CourseSlot>();
 	
-	public Student(int id, List<Course> courses){
+	public Student(int id){
 		this.ID = id;
-		this.setCourses(courses);
 	}
 
 	public List<Course> getCourses() {
 		return Courses;
 	}
 
-	public void setCourses(List<Course> courses) {
-		Courses = courses;
+	public void addCourse(Course c) {
+		Courses.add(c);
 	}
 
 	public List<CourseSlot> getMySlots() {

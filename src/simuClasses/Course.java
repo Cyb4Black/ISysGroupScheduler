@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Course {
 	private String Name;
+	private double Chance;
 	private List<CourseSlot> MySlots = new LinkedList<CourseSlot>();
 	private List<Student> MyStudents = new LinkedList<Student>();
 	
@@ -16,12 +17,16 @@ public class Course {
 		return Name;
 	}
 
-	public List<Student> getMyStudents() {
+	public List<Student> getStudents() {
 		return MyStudents;
 	}
 
-	public void setMyStudents(List<Student> myStudents) {
+	public void setStudents(List<Student> myStudents) {
 		MyStudents = myStudents;
+	}
+	
+	public void addStudent(Student s){
+		MyStudents.add(s);
 	}
 
 	public List<CourseSlot> getMySlots() {
@@ -30,5 +35,13 @@ public class Course {
 
 	public void generateMySlots() {
 		
+	}
+
+	public double getChance() {
+		return Chance;
+	}
+
+	public void setChance(double chance) {
+		Chance = chance;
 	}
 }
