@@ -1,10 +1,16 @@
 package gui;
 
+import java.util.List;
+
+import simuClasses.Student;
+
 public abstract class AbstractMain {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
+	int STUDENTS;
+	List<String> COURSES;
+	List<Student> Students;
+	
+	
+	
 
 }
