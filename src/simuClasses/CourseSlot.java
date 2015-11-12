@@ -8,8 +8,9 @@ public class CourseSlot {
 	private Course myCourse;
 	private List<Student> myStuds = new LinkedList<Student>();
 	
-	public CourseSlot(Course c){
+	public CourseSlot(Course c, int slotNo){
 		this.myCourse = c;
+		this.TimeSlot = slotNo;
 	}
 	
 	public List<Student> getStudents(){

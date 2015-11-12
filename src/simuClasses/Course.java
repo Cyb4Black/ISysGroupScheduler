@@ -33,8 +33,8 @@ public class Course {
 		return MySlots;
 	}
 
-	public void generateMySlots() {
-		
+	public void addSlot(CourseSlot cs) {
+		MySlots.add(cs);
 	}
 
 	public double getChance() {

@@ -22,4 +22,8 @@ public class TimeTable {
 		allCourses.add(cs);
 	}
 	
+	public void addAllCourseSlots(List<CourseSlot> cs){
+		allCourses.addAll(cs);
+	}
+	
 }
