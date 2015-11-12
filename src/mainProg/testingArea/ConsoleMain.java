@@ -1,4 +1,6 @@
-package gui;
+package mainProg.testingArea;
+
+import mainProg.core.AbstractMain;
 
 public class ConsoleMain extends AbstractMain {
 

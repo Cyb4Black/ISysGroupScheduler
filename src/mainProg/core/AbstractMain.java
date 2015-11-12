@@ -1,4 +1,4 @@
-package gui;
+package mainProg.core;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,22 +8,30 @@ import simuClasses.*;
 
 public abstract class AbstractMain {
 	
-	String[] courseNames = {"A","B","C"};
-	int[] courseChances = {80,90,85};
-	int OVERLAP = 2;
-	int STUDENTS = 80;
-	int MAXSTUDSPERCOURSESLOT = 12;
-	int BLOCKCOUNT = 30;
+	private String[] courseNames = {"A","B","C"};
+	private int[] courseChances = {80,90,85};
+	private int OVERLAP = 2;
+	private int STUDENTS = 80;
+	private int MAXSTUDSPERCOURSESLOT = 12;
+	private int BLOCKCOUNT = 30;
 //--------------------------------------------------------
 	
-	List<Course> COURSES = new LinkedList<Course>();
-	StudCollection studsToManage = new StudCollection();
-	TimeTable resultTable;
-	TimeTable emptyTable = null;
-	List<Integer> usedSlots = new LinkedList<Integer>();
-	Random myRandom = new Random();
+	private List<Course> COURSES = new LinkedList<Course>();
+	private StudCollection studsToManage = new StudCollection();
+	//private static TimeTable resultTable;
+	private TimeTable emptyTable = null;
+	private List<Integer> usedSlots = new LinkedList<Integer>();
+	private Random myRandom = new Random();
 	
-	public void createEmptyTable(){
+//--------------------------------------------------------
+	
+	public void init(){
+		generateCourses();
+		generateStudents();
+		createEmptyTable();
+	}
+	
+	private void createEmptyTable(){
 		for(Course c : COURSES){
 			if(emptyTable == null){
 				createFirstEmptyTable(c);
@@ -31,6 +39,10 @@ public abstract class AbstractMain {
 				createEmptyTable(c);
 			}
 		}
+	}
+	
+	public TimeTable getEmptyTable(){
+		return emptyTable;
 	}
 	
 	private void createEmptyTable(Course c){
@@ -75,14 +87,14 @@ public abstract class AbstractMain {
 		emptyTable.addAllCourseSlots(c.getMySlots());
 	}
 	
-	public void generateCourses(){
+	private void generateCourses(){
 		for(int i = 0; i < courseNames.length; i++){
 			COURSES.add(new Course(courseNames[i]));
 			COURSES.get(i).setChance(courseChances[i]);
 		}
 	}
 	
-	public void generateStudents(){
+	private void generateStudents(){
 				
 		for(int i = 0; i < STUDENTS; i++){
 			Student newStudent = new Student(i);			
