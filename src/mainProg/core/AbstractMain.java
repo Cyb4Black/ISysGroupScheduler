@@ -48,11 +48,18 @@ public abstract class AbstractMain {
 	private void createEmptyTable(Course c){
 		int slotCount = (c.getStudents().size() / MAXSTUDSPERCOURSESLOT) + ((c.getStudents().size() % MAXSTUDSPERCOURSESLOT == 0) ? 0 : 1);
 		
-		int newSlotNo = myRandom.nextInt(BLOCKCOUNT);
+		int newSlotNo;
 		
 		for(int i = 0; i < slotCount; i++){
+			newSlotNo = myRandom.nextInt(BLOCKCOUNT);
 			boolean self = false;
 			if(i < OVERLAP){
+				for(CourseSlot ts : c.getMySlots()){
+					if(ts.getTimeSlot() == newSlotNo){
+						self = true;
+						break;
+					}
+				}
 				while(!usedSlots.contains(newSlotNo) ||	self){
 					newSlotNo = myRandom.nextInt(BLOCKCOUNT);
 					for(CourseSlot ts : c.getMySlots()){
