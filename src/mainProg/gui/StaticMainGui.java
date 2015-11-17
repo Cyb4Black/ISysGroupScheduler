@@ -10,6 +10,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.ModifyEvent;
 
 public class StaticMainGui extends AbstractMain{
 
@@ -38,9 +40,7 @@ public class StaticMainGui extends AbstractMain{
 		Display display = Display.getDefault();
 		createContents();
 		shell.open();
-		shell.layout();
-		statusShow.setText("Initialized");
-		
+		shell.layout();		
 		
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
@@ -63,20 +63,20 @@ public class StaticMainGui extends AbstractMain{
 		lblStatus.setText("Status:");
 		
 		statusShow = new Label(shell, SWT.NONE);
-		statusShow.setBounds(71, 10, 55, 15);
-		statusShow.setText("Idle");
+		statusShow.setBounds(71, 10, 157, 15);
+		statusShow.setText("Waiting for Input to initialize");
 		
-		Button btnShowdebug = new Button(shell, SWT.NONE);
-		btnShowdebug.addSelectionListener(new SelectionAdapter() {
+		Button btnShowTable = new Button(shell, SWT.NONE);
+		btnShowTable.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				showDebug();
 			}
 		});
-		btnShowdebug.setToolTipText("Shows debug data in external Window");
-		btnShowdebug.setBounds(10, 157, 75, 25);
-		btnShowdebug.setText("ShowDebug");
-		btnShowdebug.setEnabled(false);
+		btnShowTable.setToolTipText("Shows debug data in external Window");
+		btnShowTable.setBounds(10, 157, 75, 25);
+		btnShowTable.setText("Show Table");
+		btnShowTable.setEnabled(false);
 		
 		Button btnGenerateGroups = new Button(shell, SWT.NONE);
 		btnGenerateGroups.setToolTipText("Generates filled TimeTable.\r\nIf \"Ignore Happiness\" checked, generates any TimeTable free of Conflicts,\r\nelse a TimeTable with optimized Happiness of Students.");
@@ -88,6 +88,11 @@ public class StaticMainGui extends AbstractMain{
 		btnIgnoreHappiness.setText("Ignore Happiness");
 		
 		chooseOverlap = new Combo(shell, SWT.NONE);
+		chooseOverlap.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				btnShowTable.setEnabled(false);
+			}
+		});
 		chooseOverlap.setItems(new String[] {"0", "1", "2", "3", "4"});
 		chooseOverlap.setBounds(71, 42, 55, 23);
 		chooseOverlap.select(0);
@@ -101,7 +106,8 @@ public class StaticMainGui extends AbstractMain{
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				initialize();
-				btnShowdebug.setEnabled(true);
+				statusShow.setText("Initialized");
+				btnShowTable.setEnabled(true);
 			}
 		});
 		btnInitialize.setBounds(10, 126, 75, 25);

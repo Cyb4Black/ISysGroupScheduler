@@ -6,6 +6,7 @@ import java.util.List;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 
 public class TimeTableBlock extends Composite {
 	public List<TimeTableSlot> slots;
@@ -16,7 +17,8 @@ public class TimeTableBlock extends Composite {
 	 */
 	public TimeTableBlock(Composite parent, int style) {
 		super(parent, SWT.BORDER);
-		setLayout(new FillLayout(SWT.HORIZONTAL));
+		setLayout(new FillLayout(SWT.VERTICAL));
+		
 		slots = new LinkedList<TimeTableSlot>();
 		
 		
