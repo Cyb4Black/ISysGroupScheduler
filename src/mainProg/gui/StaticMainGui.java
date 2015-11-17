@@ -87,5 +87,6 @@ public class StaticMainGui extends AbstractMain{
 	private void showDebug(){
 		DebugView dV = new DebugView(shell, SWT.NONE);
 		dV.setResultTable(this.getEmptyTable());
+		dV.open();
 	}
 }

@@ -51,9 +51,16 @@ public abstract class AbstractMain {
 		int newSlotNo = myRandom.nextInt(BLOCKCOUNT);
 		
 		for(int i = 0; i < slotCount; i++){
+			boolean self = false;
 			if(i < OVERLAP){
-				while(!usedSlots.contains(newSlotNo)){
+				while(!usedSlots.contains(newSlotNo) ||	self){
 					newSlotNo = myRandom.nextInt(BLOCKCOUNT);
+					for(CourseSlot ts : c.getMySlots()){
+						if(ts.getTimeSlot() == newSlotNo){
+							self = true;
+							break;
+						}
+					}
 				}
 				c.addSlot(new CourseSlot(c, newSlotNo));
 			}else{
@@ -71,12 +78,10 @@ public abstract class AbstractMain {
 	private void createFirstEmptyTable(Course c){
 		emptyTable = new TimeTable();
 		int slotCount = (c.getStudents().size() / MAXSTUDSPERCOURSESLOT) + ((c.getStudents().size() % MAXSTUDSPERCOURSESLOT == 0) ? 0 : 1);
-		int newSlotNo;
-		for(int i = 0; i < slotCount; i++){
-			newSlotNo = myRandom.nextInt(BLOCKCOUNT);
-			c.addSlot(new CourseSlot(c, newSlotNo));
-			usedSlots.add(newSlotNo);
-			
+		int newSlotNo = myRandom.nextInt(BLOCKCOUNT);
+		c.addSlot(new CourseSlot(c, newSlotNo));
+		usedSlots.add(newSlotNo);
+		for(int i = 1; i < slotCount; i++){			
 			while(usedSlots.contains(newSlotNo)){
 				newSlotNo = myRandom.nextInt(BLOCKCOUNT);
 			}
