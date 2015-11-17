@@ -26,4 +26,13 @@ public class TimeTable {
 		allCourses.addAll(cs);
 	}
 	
+	public TimeTable clone(){
+		TimeTable ret = new TimeTable();
+		List<CourseSlot> retList = new LinkedList<CourseSlot>();
+		for(CourseSlot cs : this.allCourses){
+			retList.add(new CourseSlot(cs.getCourse(), cs.getTimeSlot(),cs.getMax()));
+		}
+		ret.allCourses = retList;
+		return ret;
+	}
 }

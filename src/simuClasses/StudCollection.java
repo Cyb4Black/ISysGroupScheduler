@@ -41,4 +41,13 @@ public class StudCollection {
 	public List<Student> getLazyStuds(){
 		return lazyStuds;
 	}
+	
+	public StudCollection clone(){
+		StudCollection ret = new StudCollection();
+		ret.allStuds.addAll(this.allStuds);
+		ret.threeCourseStuds.addAll(this.threeCourseStuds);
+		ret.twoCourseStuds.addAll(this.twoCourseStuds);
+		ret.lazyStuds.addAll(this.lazyStuds);
+		return ret;
+	}
 }

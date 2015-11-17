@@ -27,6 +27,10 @@ public class CourseSlot {
 	public int getTimeSlot() {
 		return TimeSlot;
 	}
+	
+	public int getMax(){
+		return maxStuds;
+	}
 
 	public void setTimeSlot(int timeSlot) {
 		TimeSlot = timeSlot;
