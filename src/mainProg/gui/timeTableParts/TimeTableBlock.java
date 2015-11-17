@@ -8,21 +8,17 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
 public class TimeTableBlock extends Composite {
-	List<Composite> slots;
-	int blockNo;
+	public List<TimeTableSlot> slots;
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public TimeTableBlock(Composite parent, int style, int overlap, int no) {
-		super(parent, style);
+	public TimeTableBlock(Composite parent, int style) {
+		super(parent, SWT.BORDER);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
-		slots = new LinkedList<Composite>();
-		blockNo = no;
-		for(int i = 0; i < overlap; i++){
-			slots.add(new TimeTableSlot(this, SWT.NONE));
-		}
+		slots = new LinkedList<TimeTableSlot>();
+		
 		
 	}
 
@@ -30,5 +26,6 @@ public class TimeTableBlock extends Composite {
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
 	}
+	
 
 }
