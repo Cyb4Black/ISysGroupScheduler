@@ -75,66 +75,38 @@ public class DebugView {
 			if(i < 6){
 				for(CourseSlot CS : tT.getAllCourses()){
 					if(CS.getTimeSlot() == i){
-						table.colMon.blocks.get(i).slots.add(new TimeTableSlot(table.colMon.blocks.get(i), SWT.NONE, CS));
+						table.cols.get(0).blocks.get(i).slots.add(new TimeTableSlot(table.cols.get(0).blocks.get(i), SWT.NONE, CS));
 					}
 				}
 			}else if(i < 12){
 				for(CourseSlot CS : tT.getAllCourses()){
 					if(CS.getTimeSlot() == i){
-						table.colTue.blocks.get(i - 6).slots.add(new TimeTableSlot(table.colTue.blocks.get(i - 6), SWT.NONE, CS));
+						table.cols.get(1).blocks.get(i - 6).slots.add(new TimeTableSlot(table.cols.get(1).blocks.get(i - 6), SWT.NONE, CS));
 					}
 				}
 			}else if(i < 18){
 				for(CourseSlot CS : tT.getAllCourses()){
 					if(CS.getTimeSlot() == i){
-						table.colWed.blocks.get(i - 12).slots.add(new TimeTableSlot(table.colWed.blocks.get(i - 12), SWT.NONE, CS));
+						table.cols.get(2).blocks.get(i - 12).slots.add(new TimeTableSlot(table.cols.get(2).blocks.get(i - 12), SWT.NONE, CS));
 					}
 				}
 			}else if(i < 24){
 				for(CourseSlot CS : tT.getAllCourses()){
 					if(CS.getTimeSlot() == i){
-						table.colThu.blocks.get(i - 18).slots.add(new TimeTableSlot(table.colThu.blocks.get(i - 18), SWT.NONE, CS));
+						table.cols.get(3).blocks.get(i - 18).slots.add(new TimeTableSlot(table.cols.get(3).blocks.get(i - 18), SWT.NONE, CS));
 					}
 				}
 			}else{
 				for(CourseSlot CS : tT.getAllCourses()){
 					if(CS.getTimeSlot() == i){
-						table.colFri.blocks.get(i - 24).slots.add(new TimeTableSlot(table.colFri.blocks.get(i - 24), SWT.NONE, CS));
+						table.cols.get(4).blocks.get(i - 24).slots.add(new TimeTableSlot(table.cols.get(4).blocks.get(i - 24), SWT.NONE, CS));
 					}
 				}
 			}
 		}
 		
-		addEventHandlers();
-	}
-	
-	private void addEventHandlers(){
-		for(TimeTableBlock block : table.colMon.blocks){
-			for(TimeTableSlot slot : block.slots){
-				slot.addMouseListener(new MouseListener() {
-					
-					@Override
-					public void mouseUp(MouseEvent arg0) {
-						// Do nothing
-						
-					}
-					
-					@Override
-					public void mouseDown(MouseEvent arg0) {
-						// Do nothing
-						
-					}
-					
-					@Override
-					public void mouseDoubleClick(MouseEvent arg0) {
-						showCourseInfo(slot);						
-					}
-				});
-			}
-		}
-	}
-	
-	private void showCourseInfo(TimeTableSlot slot){
 		
 	}
+	
+	
 }

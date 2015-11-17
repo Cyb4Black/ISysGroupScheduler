@@ -9,12 +9,6 @@ import org.eclipse.swt.widgets.Composite;
 
 public class TimeTableCol extends Composite {
 	public TimeTableHead head;
-	public TimeTableBlock block1;
-	public TimeTableBlock block2;
-	public TimeTableBlock block3;
-	public TimeTableBlock block4;
-	public TimeTableBlock block5;
-	public TimeTableBlock block6;
 	public List<TimeTableBlock> blocks;
 
 	/**

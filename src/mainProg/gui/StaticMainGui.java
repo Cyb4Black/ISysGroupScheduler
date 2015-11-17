@@ -9,11 +9,13 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Combo;
 
 public class StaticMainGui extends AbstractMain{
 
 	protected Shell shell;
 	private static Label statusShow;
+	Combo chooseOverlap;
 
 	/**
 	 * Launch the application.
@@ -37,8 +39,9 @@ public class StaticMainGui extends AbstractMain{
 		createContents();
 		shell.open();
 		shell.layout();
-		this.init();
 		statusShow.setText("Initialized");
+		
+		
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
@@ -51,8 +54,8 @@ public class StaticMainGui extends AbstractMain{
 	 */
 	protected void createContents() {
 		shell = new Shell();
-		shell.setSize(241, 208);
-		shell.setText("SWT Application");
+		shell.setSize(435, 293);
+		shell.setText("Fcking Amazing GroupSchedule-GUI");
 		shell.setLayout(null);
 		
 		Label lblStatus = new Label(shell, SWT.NONE);
@@ -71,22 +74,47 @@ public class StaticMainGui extends AbstractMain{
 			}
 		});
 		btnShowdebug.setToolTipText("Shows debug data in external Window");
-		btnShowdebug.setBounds(10, 46, 75, 25);
+		btnShowdebug.setBounds(10, 157, 75, 25);
 		btnShowdebug.setText("ShowDebug");
+		btnShowdebug.setEnabled(false);
 		
 		Button btnGenerateGroups = new Button(shell, SWT.NONE);
 		btnGenerateGroups.setToolTipText("Generates filled TimeTable.\r\nIf \"Ignore Happiness\" checked, generates any TimeTable free of Conflicts,\r\nelse a TimeTable with optimized Happiness of Students.");
-		btnGenerateGroups.setBounds(10, 87, 92, 25);
+		btnGenerateGroups.setBounds(10, 198, 92, 25);
 		btnGenerateGroups.setText("Generate Groups");
 		
 		Button btnIgnoreHappiness = new Button(shell, SWT.CHECK);
-		btnIgnoreHappiness.setBounds(10, 118, 112, 16);
+		btnIgnoreHappiness.setBounds(10, 229, 112, 16);
 		btnIgnoreHappiness.setText("Ignore Happiness");
+		
+		chooseOverlap = new Combo(shell, SWT.NONE);
+		chooseOverlap.setItems(new String[] {"0", "1", "2", "3", "4"});
+		chooseOverlap.setBounds(71, 42, 55, 23);
+		chooseOverlap.select(0);
+		
+		Label lblOverlap = new Label(shell, SWT.NONE);
+		lblOverlap.setBounds(14, 50, 55, 15);
+		lblOverlap.setText("Overlap:");
+		
+		Button btnInitialize = new Button(shell, SWT.NONE);
+		btnInitialize.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				initialize();
+				btnShowdebug.setEnabled(true);
+			}
+		});
+		btnInitialize.setBounds(10, 126, 75, 25);
+		btnInitialize.setText("Initialize");
 	}
 	
 	private void showDebug(){
 		DebugView dV = new DebugView();
 		dV.setResultTable(this.getEmptyTable());
 		dV.open();
+	}
+	
+	private void initialize(){
+		this.init(Integer.parseInt(chooseOverlap.getText()));
 	}
 }

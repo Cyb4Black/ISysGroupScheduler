@@ -11,42 +11,53 @@ public abstract class AbstractMain {
 	
 	private String[] courseNames = {"A","B","C"};
 	private int[] courseChances = {80,90,85};
-	private int OVERLAP = 2;
+	private int OVERLAP;
 	private int STUDENTS = 80;
 	private int MAXSTUDSPERCOURSESLOT = 12;
 	private int BLOCKCOUNT = 30;
-//--------------------------------------------------------
-	
-	private List<Course> COURSES = new LinkedList<Course>();
-	private StudCollection studsToManage = new StudCollection();
-	//private static TimeTable resultTable;
-	private TimeTable emptyTable = null;
-	private List<Integer> usedSlots = new LinkedList<Integer>();
 	private Random myRandom = new Random();
+//--------------------------------------------------------
+	
+	private List<Course> COURSES;
+	private StudCollection studsToManage;
+	private HappinessList happyMatrix;
+	//private TimeTable resultTable;
+	private TimeTable initialTable;
+	private List<Integer> usedSlots;
 	
 //--------------------------------------------------------
 	
-	public void init(){
+	public void init(int ol){
+		OVERLAP = ol;
+		COURSES = new LinkedList<Course>();
+		studsToManage = new StudCollection();
+		happyMatrix = new HappinessList();
+		initialTable = null;
+		usedSlots = new LinkedList<Integer>();
+		//---------------------------------------------------
 		generateCourses();
 		generateStudents();
-		createEmptyTable();
+		createInitialTable();
+		for(CourseSlot cs : initialTable.getAllCourses()){
+			cs.initializePairings(happyMatrix);
+		}
 	}
 	
-	private void createEmptyTable(){
+	private void createInitialTable(){
 		for(Course c : COURSES){
-			if(emptyTable == null){
-				createFirstEmptyTable(c);
+			if(initialTable == null){
+				initializeInitialTable(c);
 			}else{
-				createEmptyTable(c);
+				createInitialTable(c);
 			}
 		}
 	}
 	
 	public TimeTable getEmptyTable(){
-		return emptyTable;
+		return initialTable;
 	}
 	
-	private void createEmptyTable(Course c){
+	private void createInitialTable(Course c){
 		int slotCount = (c.getStudents().size() / MAXSTUDSPERCOURSESLOT) + ((c.getStudents().size() % MAXSTUDSPERCOURSESLOT == 0) ? 0 : 1);
 		
 		int newSlotNo;
@@ -81,11 +92,11 @@ public abstract class AbstractMain {
 				usedSlots.add(newSlotNo);
 			}
 		}
-		emptyTable.addAllCourseSlots(c.getMySlots());
+		initialTable.addAllCourseSlots(c.getMySlots());
 	}
 	
-	private void createFirstEmptyTable(Course c){
-		emptyTable = new TimeTable();
+	private void initializeInitialTable(Course c){
+		initialTable = new TimeTable();
 		int slotCount = (c.getStudents().size() / MAXSTUDSPERCOURSESLOT) + ((c.getStudents().size() % MAXSTUDSPERCOURSESLOT == 0) ? 0 : 1);
 		int newSlotNo = myRandom.nextInt(BLOCKCOUNT);
 		c.addSlot(new CourseSlot(c, newSlotNo, MAXSTUDSPERCOURSESLOT));
@@ -98,7 +109,7 @@ public abstract class AbstractMain {
 			c.addSlot(new CourseSlot(c, newSlotNo, MAXSTUDSPERCOURSESLOT));
 			usedSlots.add(newSlotNo);
 		}
-		emptyTable.addAllCourseSlots(c.getMySlots());
+		initialTable.addAllCourseSlots(c.getMySlots());
 	}
 	
 	private void generateCourses(){
@@ -119,13 +130,14 @@ public abstract class AbstractMain {
 				}
 			}
 			studsToManage.addStudent(newStudent);
+			happyMatrix.generatePairing(newStudent.getID(), studsToManage.getAllStuds());
 		}
 	}
 	
 	private void putStudents(){
 		List<Student> tempStuds =studsToManage.getThreeCourseStuds();
 		Stack<Student> putStuds = new Stack<Student>();
-		List<CourseSlot> AllCourses =emptyTable.getAllCourses();
+		List<CourseSlot> AllCourses =initialTable.getAllCourses();
 		
 		for (Student student : tempStuds) {
 			for (CourseSlot courseSlot : AllCourses) {
