@@ -1,5 +1,7 @@
 package mainProg.gui;
 
+import mainProg.gui.timeTableParts.TimeTableBlock;
+import mainProg.gui.timeTableParts.TimeTableCol;
 import mainProg.gui.timeTableParts.TimeTableSlot;
 import mainProg.gui.timeTableParts.TimeTableTemplate;
 
@@ -17,6 +19,10 @@ import org.eclipse.swt.widgets.TabItem;
 import simuClasses.CourseSlot;
 import simuClasses.TimeTable;
 
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 
 public class DebugView {
@@ -98,5 +104,37 @@ public class DebugView {
 				}
 			}
 		}
+		
+		addEventHandlers();
+	}
+	
+	private void addEventHandlers(){
+		for(TimeTableBlock block : table.colMon.blocks){
+			for(TimeTableSlot slot : block.slots){
+				slot.addMouseListener(new MouseListener() {
+					
+					@Override
+					public void mouseUp(MouseEvent arg0) {
+						// Do nothing
+						
+					}
+					
+					@Override
+					public void mouseDown(MouseEvent arg0) {
+						// Do nothing
+						
+					}
+					
+					@Override
+					public void mouseDoubleClick(MouseEvent arg0) {
+						showCourseInfo(slot);						
+					}
+				});
+			}
+		}
+	}
+	
+	private void showCourseInfo(TimeTableSlot slot){
+		
 	}
 }

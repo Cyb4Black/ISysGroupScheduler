@@ -6,11 +6,13 @@ import java.util.List;
 public class CourseSlot {
 	private int TimeSlot;
 	private Course myCourse;
+	private int maxStuds;
 	private List<Student> myStuds = new LinkedList<Student>();
 	
-	public CourseSlot(Course c, int slotNo){
+	public CourseSlot(Course c, int slotNo, int max){
 		this.myCourse = c;
 		this.TimeSlot = slotNo;
+		this.maxStuds = max;
 	}
 	
 	public List<Student> getStudents(){
@@ -31,5 +33,9 @@ public class CourseSlot {
 	
 	public Course getCourse(){
 		return myCourse;
+	}
+	
+	public boolean isFilled(){
+		return myStuds.size() == maxStuds;
 	}
 }
