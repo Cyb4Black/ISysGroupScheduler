@@ -31,4 +31,13 @@ public class Student {
 	public int getID(){
 		return ID;
 	}
+
+	public void addSlot(CourseSlot courseSlot) {
+		MySlots.add(courseSlot);
+		
+	}
+	
+	public void removeSlot(CourseSlot courseSlot){
+		MySlots.remove(courseSlot);
+	}
 }

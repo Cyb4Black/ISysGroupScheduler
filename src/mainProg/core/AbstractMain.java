@@ -3,6 +3,7 @@ package mainProg.core;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Stack;
 
 import simuClasses.*;
 
@@ -108,6 +109,27 @@ public abstract class AbstractMain {
 		}
 	}
 	
-	
+	private void putStudents(){
+		List<Student> tempStuds =studsToManage.getThreeCourseStuds();
+		Stack<Student> putStuds = new Stack<Student>();
+		List<CourseSlot> AllCourses =emptyTable.getAllCourses();
+		
+		for (Student student : tempStuds) {
+			for (CourseSlot courseSlot : AllCourses) {
+				for (CourseSlot StudentSlots : student.getMySlots()){
+					if(StudentSlots.getCourse()!=courseSlot.getCourse() && StudentSlots.getTimeSlot() != courseSlot.getTimeSlot()){
+						courseSlot.addStudent(student);
+						student.addSlot(courseSlot);
+						putStuds.push(student);
+						tempStuds.remove(student);
+					}
+				}
+			}
+			if(student.getMySlots().size()!=student.getCourses().size()){
+				
+			}
+		}
+		
+	}
 
 }
