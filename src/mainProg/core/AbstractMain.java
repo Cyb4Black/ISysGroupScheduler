@@ -62,6 +62,7 @@ public abstract class AbstractMain {
 				}
 				while(!usedSlots.contains(newSlotNo) ||	self){
 					newSlotNo = myRandom.nextInt(BLOCKCOUNT);
+					self = false;
 					for(CourseSlot ts : c.getMySlots()){
 						if(ts.getTimeSlot() == newSlotNo){
 							self = true;

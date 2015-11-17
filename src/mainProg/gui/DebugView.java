@@ -19,7 +19,7 @@ import simuClasses.TimeTable;
 
 import org.eclipse.swt.layout.FillLayout;
 
-public class DebugView extends Dialog {
+public class DebugView {
 
 	protected Object result;
 	protected Shell shell;
@@ -30,9 +30,9 @@ public class DebugView extends Dialog {
 	 * @param parent
 	 * @param style
 	 */
-	public DebugView(Shell parent, int style) {
-		super(parent, style);
-		setText("Simple Debug View");
+	public DebugView() {
+		shell = new Shell();
+		shell.setText("Simple Debug View");
 		createContents();
 	}
 
@@ -43,7 +43,7 @@ public class DebugView extends Dialog {
 	public Object open() {
 		shell.open();
 		shell.layout();
-		Display display = getParent().getDisplay();
+		Display display = Display.getDefault();
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
@@ -56,9 +56,9 @@ public class DebugView extends Dialog {
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shell = new Shell(getParent(), getStyle());
+		//shell = new Shell(getParent(), getStyle());
 		shell.setSize(1170, 597);
-		shell.setText(getText());
+		//shell.setText(getText());
 		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
 		table = new TimeTableTemplate(shell, SWT.NONE);
 
