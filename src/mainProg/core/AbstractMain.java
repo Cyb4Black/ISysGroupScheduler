@@ -129,8 +129,14 @@ public abstract class AbstractMain {
 		
 		for (Student student : tempStuds) {
 			for (CourseSlot courseSlot : AllCourses) {
+				if(student.getMySlots().isEmpty() && !(courseSlot.isFilled())){
+					courseSlot.addStudent(student);
+					student.addSlot(courseSlot);
+					putStuds.push(student);
+					tempStuds.remove(student);
+				}
 				for (CourseSlot StudentSlots : student.getMySlots()){
-					if(StudentSlots.getCourse()!=courseSlot.getCourse() && StudentSlots.getTimeSlot() != courseSlot.getTimeSlot()){
+					if(StudentSlots.getCourse()!=courseSlot.getCourse() && StudentSlots.getTimeSlot() != courseSlot.getTimeSlot() && !(courseSlot.isFilled())){
 						courseSlot.addStudent(student);
 						student.addSlot(courseSlot);
 						putStuds.push(student);
