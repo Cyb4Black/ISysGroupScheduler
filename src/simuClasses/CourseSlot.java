@@ -23,6 +23,10 @@ public class CourseSlot {
 	public void addStudent(Student s){
 		myStuds.add(s);
 	}
+	
+	public void removeStudent(Student s){
+		myStuds.remove(s);
+	}
 
 	public int getTimeSlot() {
 		return TimeSlot;

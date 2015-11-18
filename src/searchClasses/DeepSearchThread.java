@@ -31,9 +31,42 @@ public class DeepSearchThread extends Thread{
 	
 	public void run(){
 		while(finishCount < stopCount){
-			// TODO Insert DeepSearch-Algorithm here ;)
+				List<Student> tempStuds =tempCollection.getThreeCourseStuds();
+				List<CourseSlot> AllCourses =resultTable.getAllCourses();
+				
+				for (Student student : tempStuds) {
+					for (CourseSlot courseSlot : AllCourses) {
+						//Fall Student hat noch keine Termine und Termin ist noch nicht voll
+						if(student.getMySlots().isEmpty() && !(courseSlot.isFilled())){
+							courseSlot.addStudent(student);
+							student.addSlot(courseSlot);
+							backtrace.push(student);
+							tempStuds.remove(student);
+						}
+						for (CourseSlot StudentSlot : student.getMySlots()){
+							//Fall Student hat noch keinen Termin von diesem Fach UND belegt noch keinen Termin zur gleichen Uhrzeit UND Termin ist noch nicht voll
+							if(StudentSlot.getCourse()!=courseSlot.getCourse() && StudentSlot.getTimeSlot() != courseSlot.getTimeSlot() && !(courseSlot.isFilled())){
+								courseSlot.addStudent(student);
+								student.addSlot(courseSlot);
+								backtrace.push(student);
+								tempStuds.remove(student);
+							}
+						}
+					}
+					//Fall Student konnte nicht gesetzt werden
+					if(student.getMySlots().size()!=student.getCourses().size()){
+						for(CourseSlot StudentSlot :student.getMySlots()){
+							StudentSlot.removeStudent(student);
+							student.removeSlot(StudentSlot);
+						}
+						tempStuds.add(0, backtrace.pop());;
+						
+					}
+				}
+				
+				finishCount++;
+				resultSet.add(resultTable);
 		}
-		finishCount++;
-		resultSet.add(resultTable);
+		
 	}
 }
