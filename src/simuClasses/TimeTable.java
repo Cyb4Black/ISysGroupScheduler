@@ -3,6 +3,12 @@ package simuClasses;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Eine Klasse, welche einen Stundenplan simuliert
+ * 
+ * @author Willnow & Selle
+ *
+ */
 public class TimeTable {
 	private List<CourseSlot> allCourses = new LinkedList<CourseSlot>();
 	

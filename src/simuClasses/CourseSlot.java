@@ -3,6 +3,13 @@ package simuClasses;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Eine Klasse, welche einen Praktikumstermin simuliert. Sie enthält einen ZeitSlot, ein Fach,
+ * eine maximal Anzahl an Studenten, eine Liste mit seinen Studenten und die HappinessList
+ * 
+ * @author Willnow & Selle
+ *
+ */
 public class CourseSlot {
 	private int TimeSlot;
 	private Course myCourse;
@@ -77,6 +84,10 @@ public class CourseSlot {
 		return this.GlobalHappinessList;
 	}
 	
+	/**
+	 * Eine Methode, welche den Glückswert eines Praktikumstermins errechnet
+	 * @return den Glückswert als double
+	 */
 	public double getHappiness(){
 		double Happiness = 0;
 		for (int i = 0; i < myStuds.size(); i++) {

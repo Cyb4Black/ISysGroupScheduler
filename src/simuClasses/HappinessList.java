@@ -4,6 +4,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Eine Klasse, welche eine Liste mit allen HappinessPairings enthält.
+ * 
+ * @author Willnow & Selle
+ *
+ */
 public class HappinessList {
 	private List<HappinessPairing> allPairings = new LinkedList<HappinessPairing>();
 	private Random myRandom = new Random();
