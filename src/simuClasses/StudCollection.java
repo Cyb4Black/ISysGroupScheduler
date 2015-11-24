@@ -30,6 +30,13 @@ public class StudCollection {
 		return allStuds;
 	}
 	
+	public void setAllLists(List<Student> all, List<Student> three, List<Student> two, List<Student> one){
+		this.allStuds = all;
+		this.threeCourseStuds = three;
+		this.twoCourseStuds = two;
+		this.lazyStuds = one;
+	}
+	
 	public List<Student> getThreeCourseStuds(){
 		return threeCourseStuds;
 	}
@@ -44,10 +51,14 @@ public class StudCollection {
 	
 	public StudCollection clone(){
 		StudCollection ret = new StudCollection();
-		ret.allStuds.addAll(this.allStuds);
-		ret.threeCourseStuds.addAll(this.threeCourseStuds);
-		ret.twoCourseStuds.addAll(this.twoCourseStuds);
-		ret.lazyStuds.addAll(this.lazyStuds);
+		for(Student s : this.getAllStuds()){
+			Student dummy = new Student(s.getID());
+			for(Course c : s.getCourses()){
+				dummy.addCourse(c);
+			}
+			ret.addStudent(dummy);
+		}
+		
 		return ret;
 	}
 }

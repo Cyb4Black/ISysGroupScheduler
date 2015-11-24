@@ -3,6 +3,7 @@ package searchClasses;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 import simuClasses.StudCollection;
 import simuClasses.TimeTable;
@@ -10,21 +11,22 @@ public class DeepSearchCore {
 	private int WITH = 8;
 	private int WITHOUT = 4;
 
-	public void generateDeepSearch(StudCollection studCol, boolean ignoreHappiness, TimeTable initTable) {
+	public void generateDeepSearch(StudCollection studCol, boolean ignoreHappiness, TimeTable initTable, TimeTable outputTable) {
 		if(ignoreHappiness){
-			generateDeepSearch(studCol, WITHOUT, initTable, ignoreHappiness);
+			generateDeepSearch(studCol, WITHOUT, initTable, outputTable, ignoreHappiness);
 		}else{
-			generateDeepSearch(studCol, WITH, initTable, ignoreHappiness);
+			generateDeepSearch(studCol, WITH, initTable, outputTable, ignoreHappiness);
 		}
 	}
 	
-	private void generateDeepSearch(StudCollection studCol, int poolSize, TimeTable initTable, boolean ignoreHappiness){
+	private void generateDeepSearch(StudCollection studCol, int poolSize, TimeTable initTable, TimeTable outputTable, boolean ignoreHappiness){
 		List<DeepSearchThread> threads = new ArrayList<DeepSearchThread>();
-		int finishCount = 0;
-		List<TimeTable> resultSet = new LinkedList<TimeTable>();
+		List<TimeTable> resultTableSet = new LinkedList<TimeTable>();
+		List<StudCollection> resultStudSet = new LinkedList<StudCollection>();
+		LockableCounter lockC = new LockableCounter(new ReentrantLock());
 		
 		for(int i = 0; i < poolSize; i++){
-			threads.add(new DeepSearchThread(studCol, initTable, finishCount, ignoreHappiness, poolSize, resultSet));
+			threads.add(new DeepSearchThread(studCol, initTable, lockC, ignoreHappiness, poolSize, resultTableSet, resultStudSet));
 		}
 		
 		for(DeepSearchThread dst : threads){
@@ -37,6 +39,13 @@ public class DeepSearchCore {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		if(ignoreHappiness){
+			outputTable.setAllCourses(resultTableSet.get(0).getAllCourses());
+			studCol.setAllLists(resultStudSet.get(0).getAllStuds(), resultStudSet.get(0).getThreeCourseStuds(), resultStudSet.get(0).getTwoCourseStuds(), resultStudSet.get(0).getLazyStuds());
+		}else{
+			//sending resultset to beamsearch
 		}
 		
 	}

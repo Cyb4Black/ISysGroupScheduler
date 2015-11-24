@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Stack;
 
+import searchClasses.DeepSearchCore;
 import simuClasses.*;
 
 public abstract class AbstractMain {
@@ -23,6 +24,7 @@ public abstract class AbstractMain {
 	private HappinessList happyMatrix;
 	//private TimeTable resultTable;
 	private TimeTable initialTable;
+	TimeTable finalTable;
 	private List<Integer> usedSlots;
 	
 //--------------------------------------------------------
@@ -32,7 +34,8 @@ public abstract class AbstractMain {
 		COURSES = new LinkedList<Course>();
 		studsToManage = new StudCollection();
 		happyMatrix = new HappinessList();
-		initialTable = null;
+		initialTable = new TimeTable();
+		finalTable = new TimeTable();
 		usedSlots = new LinkedList<Integer>();
 		//---------------------------------------------------
 		generateCourses();
@@ -43,9 +46,17 @@ public abstract class AbstractMain {
 		}
 	}
 	
+	public void startSearch(boolean ignoreHappiness){
+		DeepSearchCore DSC = new DeepSearchCore();
+		DSC.generateDeepSearch(studsToManage, ignoreHappiness, initialTable, finalTable);
+		for(CourseSlot cs : finalTable.getAllCourses()){
+			cs.initializePairings(happyMatrix);
+		}
+	}
+	
 	private void createInitialTable(){
 		for(Course c : COURSES){
-			if(initialTable == null){
+			if(initialTable.getAllCourses().isEmpty()){
 				initializeInitialTable(c);
 			}else{
 				createInitialTable(c);
@@ -55,6 +66,10 @@ public abstract class AbstractMain {
 	
 	public TimeTable getEmptyTable(){
 		return initialTable;
+	}
+	
+	public TimeTable getFinalTable(){
+		return finalTable;
 	}
 	
 	private void createInitialTable(Course c){
@@ -134,6 +149,7 @@ public abstract class AbstractMain {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private void putStudents(){
 		List<Student> tempStuds =studsToManage.getThreeCourseStuds();
 		Stack<Student> putStuds = new Stack<Student>();

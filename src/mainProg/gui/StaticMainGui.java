@@ -18,6 +18,11 @@ public class StaticMainGui extends AbstractMain{
 	protected Shell shell;
 	private static Label statusShow;
 	Combo chooseOverlap;
+	Button btnIgnoreHappiness;
+	Button btnGenerateGroups;
+	Button btnShowFinalTable;
+	Button btnShowInitialTable;
+	Button btnInitialize;
 
 	/**
 	 * Launch the application.
@@ -54,11 +59,19 @@ public class StaticMainGui extends AbstractMain{
 	 */
 	protected void createContents() {
 		shell = new Shell();
-		shell.setSize(435, 293);
+		shell.setSize(246, 356);
 		shell.setText("Fcking Amazing GroupSchedule-GUI");
 		shell.setLayout(null);
 		
 		Label lblStatus = new Label(shell, SWT.NONE);
+		btnShowInitialTable = new Button(shell, SWT.NONE);
+		btnIgnoreHappiness = new Button(shell, SWT.CHECK);
+		chooseOverlap = new Combo(shell, SWT.NONE);
+		btnInitialize = new Button(shell, SWT.NONE);
+		btnShowFinalTable = new Button(shell, SWT.NONE);
+		btnGenerateGroups = new Button(shell, SWT.NONE);
+		
+		
 		lblStatus.setBounds(10, 10, 55, 15);
 		lblStatus.setText("Status:");
 		
@@ -66,34 +79,33 @@ public class StaticMainGui extends AbstractMain{
 		statusShow.setBounds(71, 10, 157, 15);
 		statusShow.setText("Waiting for Input to initialize");
 		
-		Button btnShowTable = new Button(shell, SWT.NONE);
-		btnShowTable.addSelectionListener(new SelectionAdapter() {
+		
+		btnShowInitialTable.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				showDebug();
+				showInitialTable();
 			}
 		});
-		btnShowTable.setToolTipText("Shows debug data in external Window");
-		btnShowTable.setBounds(10, 157, 75, 25);
-		btnShowTable.setText("Show Table");
-		btnShowTable.setEnabled(false);
+		btnShowInitialTable.setToolTipText("Shows debug data in external Window");
+		btnShowInitialTable.setBounds(10, 157, 112, 25);
+		btnShowInitialTable.setText("Show Initial Table");
+		btnShowInitialTable.setEnabled(false);
 		
-		Button btnGenerateGroups = new Button(shell, SWT.NONE);
-		btnGenerateGroups.setToolTipText("Generates filled TimeTable.\r\nIf \"Ignore Happiness\" checked, generates any TimeTable free of Conflicts,\r\nelse a TimeTable with optimized Happiness of Students.");
-		btnGenerateGroups.setBounds(10, 198, 92, 25);
-		btnGenerateGroups.setText("Generate Groups");
 		
-		Button btnIgnoreHappiness = new Button(shell, SWT.CHECK);
-		btnIgnoreHappiness.setBounds(10, 229, 112, 16);
+		btnIgnoreHappiness.setEnabled(false);
+		btnIgnoreHappiness.setSelection(true);
+		btnIgnoreHappiness.setBounds(10, 280, 112, 16);
 		btnIgnoreHappiness.setText("Ignore Happiness");
 		
-		chooseOverlap = new Combo(shell, SWT.NONE);
+		
 		chooseOverlap.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent arg0) {
-				btnShowTable.setEnabled(false);
+				btnShowInitialTable.setEnabled(false);
+				btnShowFinalTable.setEnabled(false);
+				btnGenerateGroups.setEnabled(false);
 			}
 		});
-		chooseOverlap.setItems(new String[] {"0", "1", "2", "3", "4"});
+		chooseOverlap.setItems(new String[] {"0", "1", "2", "3", "4", "5"});
 		chooseOverlap.setBounds(71, 42, 55, 23);
 		chooseOverlap.select(0);
 		
@@ -101,26 +113,73 @@ public class StaticMainGui extends AbstractMain{
 		lblOverlap.setBounds(14, 50, 55, 15);
 		lblOverlap.setText("Overlap:");
 		
-		Button btnInitialize = new Button(shell, SWT.NONE);
+		
 		btnInitialize.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				initialize();
 				statusShow.setText("Initialized");
-				btnShowTable.setEnabled(true);
+				btnShowInitialTable.setEnabled(true);
+				btnGenerateGroups.setEnabled(true);
+				btnShowFinalTable.setEnabled(false);
 			}
 		});
 		btnInitialize.setBounds(10, 126, 75, 25);
 		btnInitialize.setText("Initialize");
+		
+		
+		btnGenerateGroups.setEnabled(false);
+		btnGenerateGroups.setToolTipText("Generates filled TimeTable.\r\nIf \"Ignore Happiness\" checked, generates any TimeTable free of Conflicts,\r\nelse a TimeTable with optimized Happiness of Students.");
+		btnGenerateGroups.setBounds(10, 249, 92, 25);
+		btnGenerateGroups.setText("Generate Groups");
+		btnGenerateGroups.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				searchStart();
+				statusShow.setText("Groups generated");
+				btnShowFinalTable.setEnabled(true);
+				btnGenerateGroups.setEnabled(false);
+			}
+		});
+		
+		
+		btnShowFinalTable.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				showFinalTable();
+			}
+		});
+		btnShowFinalTable.setToolTipText("Shows debug data in external Window");
+		btnShowFinalTable.setText("Show Final Table");
+		btnShowFinalTable.setEnabled(false);
+		btnShowFinalTable.setBounds(10, 218, 112, 25);
+		
+		Button btnShowStudents = new Button(shell, SWT.NONE);
+		btnShowStudents.setBounds(10, 188, 92, 25);
+		btnShowStudents.setText("Show Students");
+		
+		Button btnShowStats = new Button(shell, SWT.NONE);
+		btnShowStats.setBounds(108, 187, 75, 25);
+		btnShowStats.setText("Show Stats");
 	}
 	
-	private void showDebug(){
-		DebugView dV = new DebugView();
+	private void showInitialTable(){
+		TimeTableView dV = new TimeTableView();
 		dV.setResultTable(this.getEmptyTable());
 		dV.open();
 	}
 	
+	private void showFinalTable(){
+		TimeTableView dV = new TimeTableView();
+		dV.setResultTable(this.getFinalTable());
+		dV.open();
+		return;//just for debugging TODO remove this at some time
+	}
+	
 	private void initialize(){
 		this.init(Integer.parseInt(chooseOverlap.getText()));
+	}
+	
+	private void searchStart(){
+		this.startSearch(btnIgnoreHappiness.getSelection());
 	}
 }

@@ -32,7 +32,9 @@ public class TimeTableSlot extends Composite {
 		Label courseHappiness = new Label(this, SWT.NONE);
 		courseHappiness.setAlignment(SWT.CENTER);
 		//courseHappiness.setBounds(64, 52, 55, 15);
-		courseHappiness.setText(myCourse.getHappiness() + "");
+		
+		//courseHappiness.setText(myCourse.getHappiness() + "");
+		courseHappiness.setText(String.format("%.2g%n", myCourse.getHappiness()));
 
 	}
 

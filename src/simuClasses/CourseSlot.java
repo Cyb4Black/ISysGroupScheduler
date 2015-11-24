@@ -8,7 +8,7 @@ public class CourseSlot {
 	private Course myCourse;
 	private int maxStuds;
 	private List<Student> myStuds = new LinkedList<Student>();
-	private List<StudentPair> myPairs;
+	//private List<StudentPair> myPairs;
 	
 	public CourseSlot(Course c, int slotNo, int max){
 		this.myCourse = c;
@@ -48,7 +48,7 @@ public class CourseSlot {
 		return myStuds.size() == maxStuds;
 	}
 	
-	public void initializePairings(HappinessList HL){
+	/*public void initializePairings(HappinessList HL){
 		myPairs = new LinkedList<StudentPair>();
 		List<Student> tempStuds = new LinkedList<Student>();
 		tempStuds.addAll(myStuds);
@@ -66,13 +66,11 @@ public class CourseSlot {
 			}
 			myPairs.add(tempPair);
 		}
-	}
+	}*/
 	
 	public double getHappiness(){
 		double ret = 0;
-		for(StudentPair sp : myPairs){
-			ret += sp.getOurHappiness();
-		}
-		return ret;
+		
+		return (ret);
 	}
 }

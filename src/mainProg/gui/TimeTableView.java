@@ -1,31 +1,17 @@
 package mainProg.gui;
 
-import mainProg.gui.timeTableParts.TimeTableBlock;
-import mainProg.gui.timeTableParts.TimeTableCol;
 import mainProg.gui.timeTableParts.TimeTableSlot;
 import mainProg.gui.timeTableParts.TimeTableTemplate;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
-
 import simuClasses.CourseSlot;
 import simuClasses.TimeTable;
 
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 
-public class DebugView {
+public class TimeTableView {
 
 	protected Object result;
 	protected Shell shell;
@@ -36,7 +22,7 @@ public class DebugView {
 	 * @param parent
 	 * @param style
 	 */
-	public DebugView() {
+	public TimeTableView() {
 		shell = new Shell();
 		shell.setText("Simple Debug View");
 		createContents();

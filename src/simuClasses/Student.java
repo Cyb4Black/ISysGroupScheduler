@@ -41,4 +41,8 @@ public class Student {
 	public void removeSlot(CourseSlot courseSlot){
 		MySlots.remove(courseSlot);
 	}
+	
+	public void removeAllSlots(){
+		MySlots = new LinkedList<CourseSlot>();
+	}
 }
