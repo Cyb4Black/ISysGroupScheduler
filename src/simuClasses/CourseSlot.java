@@ -8,12 +8,14 @@ public class CourseSlot {
 	private Course myCourse;
 	private int maxStuds;
 	private List<Student> myStuds = new LinkedList<Student>();
+	private HappinessList GlobalHappinessList;
 	//private List<StudentPair> myPairs;
 	
-	public CourseSlot(Course c, int slotNo, int max){
+	public CourseSlot(Course c, int slotNo, int max, HappinessList HL){
 		this.myCourse = c;
 		this.TimeSlot = slotNo;
 		this.maxStuds = max;
+		this.GlobalHappinessList= HL;
 	}
 	
 	public List<Student> getStudents(){
@@ -69,8 +71,13 @@ public class CourseSlot {
 	}*/
 	
 	public double getHappiness(){
-		double ret = 0;
+		double Happiness = 0;
+		for (int i = 0; i < myStuds.size(); i++) {
+			for(int j=1; j < myStuds.size(); j++){
+				Happiness += GlobalHappinessList.getHpById(myStuds.get(i).getID(), myStuds.get(j).getID()).getHappiness(); 
+			}
+		}
 		
-		return (ret);
+		return Happiness;
 	}
 }
