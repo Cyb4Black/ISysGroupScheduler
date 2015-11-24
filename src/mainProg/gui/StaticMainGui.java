@@ -23,6 +23,8 @@ public class StaticMainGui extends AbstractMain{
 	Button btnShowFinalTable;
 	Button btnShowInitialTable;
 	Button btnInitialize;
+	Button btnShowStudents;
+	Button btnShowStats;
 
 	/**
 	 * Launch the application.
@@ -70,6 +72,8 @@ public class StaticMainGui extends AbstractMain{
 		btnInitialize = new Button(shell, SWT.NONE);
 		btnShowFinalTable = new Button(shell, SWT.NONE);
 		btnGenerateGroups = new Button(shell, SWT.NONE);
+		btnShowStudents = new Button(shell, SWT.NONE);
+		btnShowStats = new Button(shell, SWT.NONE);
 		
 		
 		lblStatus.setBounds(10, 10, 55, 15);
@@ -153,11 +157,10 @@ public class StaticMainGui extends AbstractMain{
 		btnShowFinalTable.setEnabled(false);
 		btnShowFinalTable.setBounds(10, 218, 112, 25);
 		
-		Button btnShowStudents = new Button(shell, SWT.NONE);
+		
 		btnShowStudents.setBounds(10, 188, 92, 25);
 		btnShowStudents.setText("Show Students");
 		
-		Button btnShowStats = new Button(shell, SWT.NONE);
 		btnShowStats.setBounds(108, 187, 75, 25);
 		btnShowStats.setText("Show Stats");
 	}

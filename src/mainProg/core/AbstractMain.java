@@ -41,17 +41,11 @@ public abstract class AbstractMain {
 		generateCourses();
 		generateStudents();
 		createInitialTable();
-		for(CourseSlot cs : initialTable.getAllCourses()){
-			cs.initializePairings(happyMatrix);
-		}
 	}
 	
 	public void startSearch(boolean ignoreHappiness){
 		DeepSearchCore DSC = new DeepSearchCore();
 		DSC.generateDeepSearch(studsToManage, ignoreHappiness, initialTable, finalTable);
-		for(CourseSlot cs : finalTable.getAllCourses()){
-			cs.initializePairings(happyMatrix);
-		}
 	}
 	
 	private void createInitialTable(){
