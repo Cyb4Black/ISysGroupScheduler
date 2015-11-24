@@ -22,6 +22,10 @@ public class CourseSlot {
 		return myStuds;
 	}
 	
+	public void setStudents(List<Student> MyStuds){
+		this.myStuds=MyStuds;
+	}
+	
 	public void addStudent(Student s){
 		myStuds.add(s);
 	}
@@ -83,4 +87,5 @@ public class CourseSlot {
 		
 		return Happiness;
 	}
+	
 }

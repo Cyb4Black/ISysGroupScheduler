@@ -45,4 +45,20 @@ public class Student {
 	public void removeAllSlots(){
 		MySlots = new LinkedList<CourseSlot>();
 	}
+	
+	/**
+	 * Eine Hilfsmethode die bestimmt ob ein Student an einem TimeSlot frei hat.
+	 * @param i der zu überprüfenden TimeSlot
+	 * @return true wenn der Student frei hat, sonst false
+	 */
+	public boolean gotTime(int i){
+		boolean Time=true;
+		for (CourseSlot cs : MySlots) {
+			if(cs.getTimeSlot()==i){
+				Time=false;
+			}
+		}
+		return Time;
+		
+	}
 }
