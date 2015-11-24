@@ -58,6 +58,10 @@ public abstract class AbstractMain {
 		}
 	}
 	
+	public StudCollection getStudCol(){
+		return this.studsToManage;
+	}
+	
 	public TimeTable getEmptyTable(){
 		return initialTable;
 	}

@@ -6,7 +6,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 
 public class StudentTableHead extends Composite {
-	public Label headLabel;
 	/**
 	 * Create the composite.
 	 * @param parent
@@ -16,27 +15,30 @@ public class StudentTableHead extends Composite {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.VERTICAL));
 		
-		headLabel = new Label(this, SWT.NONE);
-		headLabel.setAlignment(SWT.CENTER);
-		
 		Composite labs = new Composite(this, SWT.NONE);
 		labs.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		Label lblCourse = new Label(labs, SWT.NONE);
+		Label lblStudID = new Label(labs, SWT.NONE);
 		//lblCourse.setBounds(10, 10, 55, 15);
-		lblCourse.setText("Course");
-		lblCourse.setAlignment(SWT.CENTER);
+		lblStudID.setText("Student");
+		lblStudID.setAlignment(SWT.CENTER);
 		
-		Label lblStudents = new Label(labs, SWT.NONE);
+		Label lblCourseA = new Label(labs, SWT.NONE);
 		//lblStudents.setBounds(10, 31, 55, 15);
-		lblStudents.setText("Students");
-		lblStudents.setAlignment(SWT.CENTER);
+		lblCourseA.setText("Course A");
+		lblCourseA.setAlignment(SWT.CENTER);
 		
-		Label lblTotHap = new Label(labs, SWT.NONE);
-		lblTotHap.setToolTipText("Amount of total happiness.");
+		Label lblCourseB = new Label(labs, SWT.NONE);
+		lblCourseB.setToolTipText("Amount of total happiness.");
 		//lblTotHap.setBounds(10, 52, 55, 15);
-		lblTotHap.setText("Val. Hap.");
-		lblTotHap.setAlignment(SWT.CENTER);
+		lblCourseB.setText("Course B");
+		lblCourseB.setAlignment(SWT.CENTER);
+		
+		Label lblCourseC = new Label(labs, SWT.NONE);
+		lblCourseC.setToolTipText("Amount of total happiness.");
+		//lblTotHap.setBounds(10, 52, 55, 15);
+		lblCourseC.setText("Course C");
+		lblCourseC.setAlignment(SWT.CENTER);
 
 	}
 

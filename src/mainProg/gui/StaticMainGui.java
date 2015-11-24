@@ -107,6 +107,7 @@ public class StaticMainGui extends AbstractMain{
 				btnShowInitialTable.setEnabled(false);
 				btnShowFinalTable.setEnabled(false);
 				btnGenerateGroups.setEnabled(false);
+				btnShowStudents.setEnabled(false);
 			}
 		});
 		chooseOverlap.setItems(new String[] {"0", "1", "2", "3", "4", "5"});
@@ -142,6 +143,7 @@ public class StaticMainGui extends AbstractMain{
 				statusShow.setText("Groups generated");
 				btnShowFinalTable.setEnabled(true);
 				btnGenerateGroups.setEnabled(false);
+				btnShowStudents.setEnabled(true);
 			}
 		});
 		
@@ -160,6 +162,12 @@ public class StaticMainGui extends AbstractMain{
 		
 		btnShowStudents.setBounds(10, 188, 92, 25);
 		btnShowStudents.setText("Show Students");
+		btnShowStudents.setEnabled(false);
+		btnShowStudents.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				showStudTable();
+			}
+		});
 		
 		btnShowStats.setBounds(108, 187, 75, 25);
 		btnShowStats.setText("Show Stats");
@@ -176,6 +184,11 @@ public class StaticMainGui extends AbstractMain{
 		dV.setResultTable(this.getFinalTable());
 		dV.open();
 		return;//just for debugging TODO remove this at some time
+	}
+	
+	private void showStudTable(){
+		StudentView STV = new StudentView(this.getStudCol());
+		STV.open();
 	}
 	
 	private void initialize(){

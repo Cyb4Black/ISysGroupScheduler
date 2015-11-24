@@ -8,33 +8,20 @@ import org.eclipse.swt.SWT;
 import simuClasses.CourseSlot;
 
 public class StudentTableSlot extends Composite {
-	public CourseSlot myCourse;
+	Label lblSlotVal;
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public StudentTableSlot(Composite parent, int style, CourseSlot CS) {
+	public StudentTableSlot(Composite parent, int style) {
 		super(parent, style);
-		myCourse = CS;
+		setSize(parent.getSize().x, 20);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		Label courseName = new Label(this, SWT.NONE);
-		courseName.setAlignment(SWT.CENTER);
+		lblSlotVal = new Label(this, SWT.NONE);
+		lblSlotVal.setAlignment(SWT.CENTER);
 		//courseName.setBounds(64, 10, 55, 15);
-		courseName.setText(myCourse.getCourse().getName());
-		
-		Label courseStuds = new Label(this, SWT.NONE);
-		courseStuds.setAlignment(SWT.CENTER);
-		//courseStuds.setBounds(64, 31, 55, 15);
-		courseStuds.setText(myCourse.getStudents().size() + "");
-		
-		Label courseHappiness = new Label(this, SWT.NONE);
-		courseHappiness.setAlignment(SWT.CENTER);
-		//courseHappiness.setBounds(64, 52, 55, 15);
-		
-		//courseHappiness.setText(myCourse.getHappiness() + "");
-		courseHappiness.setText(String.format("%.4g%n", myCourse.getHappiness()));
 
 	}
 

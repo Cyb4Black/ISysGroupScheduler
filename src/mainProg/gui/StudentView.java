@@ -1,12 +1,15 @@
 package mainProg.gui;
 
+import mainProg.gui.studViewParts.StudentTableTemplate;
 import mainProg.gui.timeTableParts.TimeTableSlot;
 import mainProg.gui.timeTableParts.TimeTableTemplate;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.SWT;
+
 import simuClasses.CourseSlot;
+import simuClasses.StudCollection;
 import simuClasses.TimeTable;
 
 import org.eclipse.swt.layout.FillLayout;
@@ -15,17 +18,17 @@ public class StudentView {
 
 	protected Object result;
 	protected Shell shell;
-	private TimeTableTemplate table;
+	private StudentTableTemplate table;
 
 	/**
 	 * Create the dialog.
 	 * @param parent
 	 * @param style
 	 */
-	public StudentView() {
+	public StudentView(StudCollection SC) {
 		shell = new Shell();
 		shell.setText("Student View");
-		createContents();
+		createContents(SC);
 	}
 
 	/**
@@ -47,51 +50,13 @@ public class StudentView {
 	/**
 	 * Create contents of the dialog.
 	 */
-	private void createContents() {
+	private void createContents(StudCollection SC) {
 		//shell = new Shell(getParent(), getStyle());
-		shell.setSize(1170, 597);
+		shell.setSize(400, 240);
 		//shell.setText(getText());
 		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
-		table = new TimeTableTemplate(shell, SWT.NONE);
+		table = new StudentTableTemplate(shell, SWT.NONE, SC);
 
-	}
-	
-	public void setResultTable(TimeTable tT){
-		for(int i = 0; i < 30; i++){
-			if(i < 6){
-				for(CourseSlot CS : tT.getAllCourses()){
-					if(CS.getTimeSlot() == i){
-						table.cols.get(0).blocks.get(i).slots.add(new TimeTableSlot(table.cols.get(0).blocks.get(i), SWT.NONE, CS));
-					}
-				}
-			}else if(i < 12){
-				for(CourseSlot CS : tT.getAllCourses()){
-					if(CS.getTimeSlot() == i){
-						table.cols.get(1).blocks.get(i - 6).slots.add(new TimeTableSlot(table.cols.get(1).blocks.get(i - 6), SWT.NONE, CS));
-					}
-				}
-			}else if(i < 18){
-				for(CourseSlot CS : tT.getAllCourses()){
-					if(CS.getTimeSlot() == i){
-						table.cols.get(2).blocks.get(i - 12).slots.add(new TimeTableSlot(table.cols.get(2).blocks.get(i - 12), SWT.NONE, CS));
-					}
-				}
-			}else if(i < 24){
-				for(CourseSlot CS : tT.getAllCourses()){
-					if(CS.getTimeSlot() == i){
-						table.cols.get(3).blocks.get(i - 18).slots.add(new TimeTableSlot(table.cols.get(3).blocks.get(i - 18), SWT.NONE, CS));
-					}
-				}
-			}else{
-				for(CourseSlot CS : tT.getAllCourses()){
-					if(CS.getTimeSlot() == i){
-						table.cols.get(4).blocks.get(i - 24).slots.add(new TimeTableSlot(table.cols.get(4).blocks.get(i - 24), SWT.NONE, CS));
-					}
-				}
-			}
-		}
-		
-		
 	}
 	
 	
