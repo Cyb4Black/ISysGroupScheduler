@@ -1,4 +1,4 @@
-package mainProg.gui.timeTableParts;
+package mainProg.gui.studViewParts;
 
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -7,14 +7,14 @@ import org.eclipse.swt.SWT;
 
 import simuClasses.CourseSlot;
 
-public class TimeTableSlot extends Composite {
+public class StudentTableSlot extends Composite {
 	public CourseSlot myCourse;
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public TimeTableSlot(Composite parent, int style, CourseSlot CS) {
+	public StudentTableSlot(Composite parent, int style, CourseSlot CS) {
 		super(parent, style);
 		myCourse = CS;
 		setLayout(new FillLayout(SWT.HORIZONTAL));

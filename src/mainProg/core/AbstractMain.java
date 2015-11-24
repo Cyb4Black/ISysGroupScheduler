@@ -91,13 +91,13 @@ public abstract class AbstractMain {
 						}
 					}
 				}
-				c.addSlot(new CourseSlot(c, newSlotNo, MAXSTUDSPERCOURSESLOT));
+				c.addSlot(new CourseSlot(c, newSlotNo, MAXSTUDSPERCOURSESLOT, happyMatrix));
 			}else{
 				while(usedSlots.contains(newSlotNo)){
 					newSlotNo = myRandom.nextInt(BLOCKCOUNT);
 				}
 				
-				c.addSlot(new CourseSlot(c, newSlotNo, MAXSTUDSPERCOURSESLOT));
+				c.addSlot(new CourseSlot(c, newSlotNo, MAXSTUDSPERCOURSESLOT,happyMatrix));
 				usedSlots.add(newSlotNo);
 			}
 		}
@@ -108,14 +108,14 @@ public abstract class AbstractMain {
 		initialTable = new TimeTable();
 		int slotCount = (c.getStudents().size() / MAXSTUDSPERCOURSESLOT) + ((c.getStudents().size() % MAXSTUDSPERCOURSESLOT == 0) ? 0 : 1);
 		int newSlotNo = myRandom.nextInt(BLOCKCOUNT);
-		c.addSlot(new CourseSlot(c, newSlotNo, MAXSTUDSPERCOURSESLOT));
+		c.addSlot(new CourseSlot(c, newSlotNo, MAXSTUDSPERCOURSESLOT, happyMatrix));
 		usedSlots.add(newSlotNo);
 		for(int i = 1; i < slotCount; i++){			
 			while(usedSlots.contains(newSlotNo)){
 				newSlotNo = myRandom.nextInt(BLOCKCOUNT);
 			}
 			
-			c.addSlot(new CourseSlot(c, newSlotNo, MAXSTUDSPERCOURSESLOT));
+			c.addSlot(new CourseSlot(c, newSlotNo, MAXSTUDSPERCOURSESLOT, happyMatrix));
 			usedSlots.add(newSlotNo);
 		}
 		initialTable.addAllCourseSlots(c.getMySlots());

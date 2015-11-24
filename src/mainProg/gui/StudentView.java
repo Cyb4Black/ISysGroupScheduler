@@ -24,7 +24,7 @@ public class StudentView {
 	 */
 	public StudentView() {
 		shell = new Shell();
-		shell.setText("Simple Debug View");
+		shell.setText("Student View");
 		createContents();
 	}
 

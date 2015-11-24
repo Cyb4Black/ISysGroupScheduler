@@ -30,7 +30,7 @@ public class TimeTable {
 		TimeTable ret = new TimeTable();
 		List<CourseSlot> retList = new LinkedList<CourseSlot>();
 		for(CourseSlot cs : this.allCourses){
-			retList.add(new CourseSlot(cs.getCourse(), cs.getTimeSlot(),cs.getMax()));
+			retList.add(new CourseSlot(cs.getCourse(), cs.getTimeSlot(),cs.getMax(), cs.getHappyMatrix()));
 		}
 		ret.allCourses = retList;
 		return ret;

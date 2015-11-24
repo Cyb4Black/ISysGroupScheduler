@@ -69,6 +69,9 @@ public class CourseSlot {
 			myPairs.add(tempPair);
 		}
 	}*/
+	public HappinessList getHappyMatrix(){
+		return this.GlobalHappinessList;
+	}
 	
 	public double getHappiness(){
 		double Happiness = 0;
