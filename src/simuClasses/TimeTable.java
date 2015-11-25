@@ -42,6 +42,18 @@ public class TimeTable {
 		return ret;
 	}
 	
+//	public TimeTable cloneDeep(){
+//		TimeTable ret = new TimeTable();
+//		List<CourseSlot> retList = new LinkedList<CourseSlot>();
+//		for(CourseSlot cs : this.allCourses){
+//			CourseSlot dummySlot = new CourseSlot(cs.getCourse(), cs.getTimeSlot(),cs.getMax(), cs.getHappyMatrix());
+//			dummySlot.setStudents(cs.getStudents());
+//			retList.add(dummySlot);
+//		}
+//		ret.allCourses = retList;
+//		return ret;
+//	}
+	
 	public double getHappiness(){
 		double ret = 0;
 		for(CourseSlot cs : allCourses){

@@ -61,28 +61,14 @@ public class CourseSlot {
 		return myStuds.size() == maxStuds;
 	}
 	
-	/*public void initializePairings(HappinessList HL){
-		myPairs = new LinkedList<StudentPair>();
-		List<Student> tempStuds = new LinkedList<Student>();
-		tempStuds.addAll(myStuds);
-		
-		while(!tempStuds.isEmpty()){
-			StudentPair tempPair = new StudentPair();
-			tempPair.setStud1(tempStuds.remove(0));
-			
-			if(!tempStuds.isEmpty()){
-				tempPair.setStud2(tempStuds.remove(tempStuds.size()-1));
-				tempPair.setOurHappiness(HL.getHpById(tempPair.getStud1().getID(), tempPair.getStud2().getID()).getHappiness());
-			}else{
-				tempPair.setStud2(null);
-				tempPair.setOurHappiness(0.5);
-			}
-			myPairs.add(tempPair);
-		}
-	}*/
 	public HappinessList getHappyMatrix(){
 		return this.GlobalHappinessList;
 	}
+	
+//	public CourseSlot clone(){
+//		CourseSlot ret = new CourseSlot(myCourse, TimeSlot, maxStuds, GlobalHappinessList);
+//		for(Student)
+//	}
 	
 	/**
 	 * Eine Methode, welche den Glückswert eines Praktikumstermins errechnet

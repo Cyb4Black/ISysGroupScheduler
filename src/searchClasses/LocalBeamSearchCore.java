@@ -39,5 +39,6 @@ public class LocalBeamSearchCore extends Thread {
 				e.printStackTrace();
 			}
 		}
+		return;
 	}
 }
