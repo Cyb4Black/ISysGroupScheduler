@@ -96,10 +96,17 @@ public class StaticMainGui extends AbstractMain{
 		btnShowInitialTable.setEnabled(false);
 		
 		
-		btnIgnoreHappiness.setEnabled(false);
 		btnIgnoreHappiness.setSelection(true);
 		btnIgnoreHappiness.setBounds(10, 280, 112, 16);
 		btnIgnoreHappiness.setText("Ignore Happiness");
+		btnIgnoreHappiness.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				btnShowFinalTable.setEnabled(false);
+				btnGenerateGroups.setEnabled(true);
+				btnShowStudents.setEnabled(false);
+				btnShowStats.setEnabled(false);
+			}
+		});
 		
 		
 		chooseOverlap.addModifyListener(new ModifyListener() {
@@ -108,6 +115,7 @@ public class StaticMainGui extends AbstractMain{
 				btnShowFinalTable.setEnabled(false);
 				btnGenerateGroups.setEnabled(false);
 				btnShowStudents.setEnabled(false);
+				btnShowStats.setEnabled(false);
 			}
 		});
 		chooseOverlap.setItems(new String[] {"0", "1", "2", "3", "4", "5"});
@@ -143,6 +151,7 @@ public class StaticMainGui extends AbstractMain{
 				statusShow.setText("Groups generated");
 				btnShowFinalTable.setEnabled(true);
 				btnGenerateGroups.setEnabled(false);
+				btnShowStats.setEnabled(true);
 				btnShowStudents.setEnabled(true);
 			}
 		});
@@ -171,6 +180,12 @@ public class StaticMainGui extends AbstractMain{
 		
 		btnShowStats.setBounds(108, 187, 75, 25);
 		btnShowStats.setText("Show Stats");
+		btnShowStats.setEnabled(false);
+		btnShowStats.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				showStats();
+			}
+		});
 	}
 	
 	private void showInitialTable(){
@@ -188,6 +203,11 @@ public class StaticMainGui extends AbstractMain{
 	
 	private void showStudTable(){
 		StudentView STV = new StudentView(this.getStudCol());
+		STV.open();
+	}
+	
+	private void showStats(){
+		StatView STV = new StatView(this.getFinalTable(), this.getStudCol(), this.getCourses());
 		STV.open();
 	}
 	

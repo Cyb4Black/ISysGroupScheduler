@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.Stack;
 
 import searchClasses.DeepSearchCore;
+import searchClasses.LocalBeamSearchCorePool;
 import simuClasses.*;
 
 public abstract class AbstractMain {
@@ -45,7 +46,8 @@ public abstract class AbstractMain {
 	
 	public void startSearch(boolean ignoreHappiness){
 		DeepSearchCore DSC = new DeepSearchCore();
-		DSC.generateDeepSearch(studsToManage, ignoreHappiness, initialTable, finalTable);
+		LocalBeamSearchCorePool LBSCP = new LocalBeamSearchCorePool();
+		DSC.generateDeepSearch(studsToManage, ignoreHappiness, initialTable, finalTable, LBSCP);
 	}
 	
 	private void createInitialTable(){
@@ -56,6 +58,10 @@ public abstract class AbstractMain {
 				createInitialTable(c);
 			}
 		}
+	}
+	
+	public List<Course> getCourses(){
+		return this.COURSES;
 	}
 	
 	public StudCollection getStudCol(){

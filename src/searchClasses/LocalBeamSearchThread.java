@@ -1,6 +1,8 @@
 package searchClasses;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Stack;
 
 import simuClasses.*;
@@ -27,9 +29,20 @@ public class LocalBeamSearchThread extends Thread {
 		StudCollection myTempCollection = MyStuds.clone();
 		Student tempStud1;
 		Student tempStud2;
+		List<CourseSlot> tempSlots1 = new LinkedList<CourseSlot>();
+		List<CourseSlot> tempSlots2 = new LinkedList<CourseSlot>();
+		Random myRand = new Random();
 		
-		for (CourseSlot CS1 : allCourseSlots) {
-			for (CourseSlot CS2 : allCourseSlots) {
+		
+//		for (CourseSlot CS1 : allCourseSlots) {
+		tempSlots1.addAll(allCourseSlots);
+		while(!(tempSlots1.isEmpty())){
+			CourseSlot CS1 = tempSlots1.get(myRand.nextInt(tempSlots1.size()));
+			
+//			for (CourseSlot CS2 : allCourseSlots) {
+			tempSlots2.addAll(allCourseSlots);
+			while(!(tempSlots2.isEmpty())){
+				CourseSlot CS2 = tempSlots1.get(myRand.nextInt(tempSlots2.size()));
 				
 				//Fall CS1 und CS2 haben den selben Kurs sind aber nicht der selbe Praktikumstermin
 				if(CS1.getCourse()==CS2.getCourse() && CS1!=CS2){
@@ -45,11 +58,17 @@ public class LocalBeamSearchThread extends Thread {
 						
 					} while (HappinessNew > HappinessOld);
 					
-					swapStud(CS1, tempStud1, CS2, tempStud2);
+					swapStud(CS2, tempStud1, CS1, tempStud2);
 				}
+				tempSlots2.remove(CS2);
+				System.out.println(this.getId() + ": TS2 " + (allCourseSlots.size() - tempSlots2.size()) + " von " + allCourseSlots.size() + "fertig.");
 			}
+			tempSlots1.remove(CS1);
+			System.out.println(this.getId() + ": TS1 " + (allCourseSlots.size() - tempSlots1.size()) + " von " + allCourseSlots.size() + "fertig.");
 		}
 		
+		resultTableSet.add(myResultTable);
+		resultStudSet.add(myTempCollection);
 		
 	}
 		

@@ -41,4 +41,12 @@ public class TimeTable {
 		ret.allCourses = retList;
 		return ret;
 	}
+	
+	public double getHappiness(){
+		double ret = 0;
+		for(CourseSlot cs : allCourses){
+			ret += cs.getHappiness();
+		}
+		return ret;
+	}
 }

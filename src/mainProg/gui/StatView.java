@@ -1,37 +1,49 @@
 package mainProg.gui;
 
-import mainProg.gui.timeTableParts.TimeTableSlot;
-import mainProg.gui.timeTableParts.TimeTableTemplate;
+import java.util.List;
 
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
+
+import simuClasses.Course;
 import simuClasses.CourseSlot;
+import simuClasses.StudCollection;
+import simuClasses.Student;
 import simuClasses.TimeTable;
 
-import org.eclipse.swt.layout.FillLayout;
 
 public class StatView {
-
 	protected Object result;
-	protected Shell shell;
-	private TimeTableTemplate table;
-
-	/**
-	 * Create the dialog.
-	 * @param parent
-	 * @param style
-	 */
-	public StatView() {
+	private Shell shell;
+	private String[] COURSES = {"A", "B", "C"};
+	TimeTable TT;
+	StudCollection SC;
+	List<Course> LC;
+	Display display;
+	Color yellow;
+	Color red;
+	
+	public StatView(TimeTable tt, StudCollection sc, List<Course> lc){
+		this.TT = tt;
+		this.SC = sc;
+		this.LC = lc;
 		shell = new Shell();
-		shell.setText("Statistical View");
+		shell.setText("Student View");
+		display = display.getCurrent();
+		red = display.getSystemColor(SWT.COLOR_RED);
+		yellow = display.getSystemColor(SWT.COLOR_YELLOW);
 		createContents();
 	}
-
-	/**
-	 * Open the dialog.
-	 * @return the result
-	 */
+	
 	public Object open() {
 		shell.open();
 		shell.layout();
@@ -43,56 +55,47 @@ public class StatView {
 		}
 		return result;
 	}
-
-	/**
-	 * Create contents of the dialog.
-	 */
+	
 	private void createContents() {
-		//shell = new Shell(getParent(), getStyle());
-		shell.setSize(1170, 597);
-		//shell.setText(getText());
-		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
-		table = new TimeTableTemplate(shell, SWT.NONE);
+	    shell.setSize(370, 140);
+	    shell.setLayout(new FillLayout());
+	    shell.setText("Students Slots View");
+	    
 
-	}
-	
-	public void setResultTable(TimeTable tT){
-		for(int i = 0; i < 30; i++){
-			if(i < 6){
-				for(CourseSlot CS : tT.getAllCourses()){
-					if(CS.getTimeSlot() == i){
-						table.cols.get(0).blocks.get(i).slots.add(new TimeTableSlot(table.cols.get(0).blocks.get(i), SWT.NONE, CS));
-					}
-				}
-			}else if(i < 12){
-				for(CourseSlot CS : tT.getAllCourses()){
-					if(CS.getTimeSlot() == i){
-						table.cols.get(1).blocks.get(i - 6).slots.add(new TimeTableSlot(table.cols.get(1).blocks.get(i - 6), SWT.NONE, CS));
-					}
-				}
-			}else if(i < 18){
-				for(CourseSlot CS : tT.getAllCourses()){
-					if(CS.getTimeSlot() == i){
-						table.cols.get(2).blocks.get(i - 12).slots.add(new TimeTableSlot(table.cols.get(2).blocks.get(i - 12), SWT.NONE, CS));
-					}
-				}
-			}else if(i < 24){
-				for(CourseSlot CS : tT.getAllCourses()){
-					if(CS.getTimeSlot() == i){
-						table.cols.get(3).blocks.get(i - 18).slots.add(new TimeTableSlot(table.cols.get(3).blocks.get(i - 18), SWT.NONE, CS));
-					}
-				}
-			}else{
-				for(CourseSlot CS : tT.getAllCourses()){
-					if(CS.getTimeSlot() == i){
-						table.cols.get(4).blocks.get(i - 24).slots.add(new TimeTableSlot(table.cols.get(4).blocks.get(i - 24), SWT.NONE, CS));
-					}
-				}
-			}
-		}
-		
-		
-	}
-	
-	
+	    Table table = new Table(shell, SWT.BORDER | SWT.V_SCROLL);
+	    table.setHeaderVisible(true);
+	    String[] titles = { "Info Title", "Course A", "Course B", "Course C", "Overall" };
+
+	    for (int i = 0; i < titles.length; i++) {
+	      TableColumn column = new TableColumn(table, SWT.NULL);
+	      column.setText(titles[i]);
+	    }
+
+	    TableItem itemStudCount = new TableItem(table, SWT.NULL);
+	    itemStudCount.setText(0, "Course Studs");
+	    TableItem itemCourseHappiness = new TableItem(table, SWT.NULL);
+	    itemCourseHappiness.setText(0, "Course Happiness");
+	    double sum = 0;
+	    for(int i = 1; i < 4; i++){
+	    	int count = 0;
+	    	double hp = 0;
+	    	for(CourseSlot cs : TT.getAllCourses()){
+	    		if(cs.getCourse().getName().equals(COURSES[i-1])){
+	    			count += cs.getStudents().size();
+	    			hp += cs.getHappiness();
+	    		}
+	    	}
+	    	itemStudCount.setText(i, count + "/" + LC.get(i-1).getStudents().size());
+	    	itemCourseHappiness.setText(i, String.format("%.5g%n", hp));
+	    	sum += hp;
+	    }
+	    itemStudCount.setText(4, "");
+	    itemCourseHappiness.setText(4, String.format("%.6g%n", sum));
+
+	    for (int i = 0; i < titles.length; i++) {
+	      table.getColumn(i).pack();
+	    }
+
+
+	  }
 }

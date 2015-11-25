@@ -11,15 +11,15 @@ public class DeepSearchCore {
 	private int WITH = 8;
 	private int WITHOUT = 4;
 
-	public void generateDeepSearch(StudCollection studCol, boolean ignoreHappiness, TimeTable initTable, TimeTable outputTable) {
+	public void generateDeepSearch(StudCollection studCol, boolean ignoreHappiness, TimeTable initTable, TimeTable outputTable, LocalBeamSearchCorePool LBSCP) {
 		if(ignoreHappiness){
-			generateDeepSearch(studCol, WITHOUT, initTable, outputTable, ignoreHappiness);
+			generateDeepSearch(studCol, WITHOUT, initTable, outputTable, ignoreHappiness, LBSCP);
 		}else{
-			generateDeepSearch(studCol, WITH, initTable, outputTable, ignoreHappiness);
+			generateDeepSearch(studCol, WITH, initTable, outputTable, ignoreHappiness, LBSCP);
 		}
 	}
 	
-	private void generateDeepSearch(StudCollection studCol, int poolSize, TimeTable initTable, TimeTable outputTable, boolean ignoreHappiness){
+	private void generateDeepSearch(StudCollection studCol, int poolSize, TimeTable initTable, TimeTable outputTable, boolean ignoreHappiness, LocalBeamSearchCorePool LBSCP){
 		List<DeepSearchThread> threads = new ArrayList<DeepSearchThread>();
 		List<TimeTable> resultTableSet = new LinkedList<TimeTable>();
 		List<StudCollection> resultStudSet = new LinkedList<StudCollection>();
@@ -45,7 +45,7 @@ public class DeepSearchCore {
 			outputTable.setAllCourses(resultTableSet.get(0).getAllCourses());
 			studCol.setAllLists(resultStudSet.get(0).getAllStuds(), resultStudSet.get(0).getThreeCourseStuds(), resultStudSet.get(0).getTwoCourseStuds(), resultStudSet.get(0).getLazyStuds());
 		}else{
-			//sending resultset to beamsearch
+			LBSCP.generateBeamSearchCores(outputTable, studCol, resultTableSet, resultStudSet);
 		}
 		
 	}
