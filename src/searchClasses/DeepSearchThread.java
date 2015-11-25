@@ -68,12 +68,25 @@ public class DeepSearchThread extends Thread {
 					// Fall Student hat noch keinen Termin von diesem Fach
 					// UND belegt noch keinen Termin zur gleichen Uhrzeit
 					// UND Termin ist noch nicht voll
-					if(  student.gotTime(courseSlot.getTimeSlot()) && (!courseSlot.isFilled()) && (!(student.getCourses().contains(courseSlot.getCourse())) || found.contains(courseSlot.getCourse().getName()))){
+					if(  student.gotTime(courseSlot.getTimeSlot())
+							&& !(courseSlot.isFilled())
+							&& student.getCourses().contains(courseSlot.getCourse())
+							&& !(found.contains(courseSlot.getCourse().getName()))){
 						courseSlot.addStudent(student);
 						student.addSlot(courseSlot);
 						found.add(courseSlot.getCourse().getName());
 						backtrace.push(student);
 					}
+//					boolean b1 = student.gotTime(courseSlot.getTimeSlot());
+//					boolean b2 = !(courseSlot.isFilled());
+//					boolean b3 = !(student.getCourses().contains(courseSlot.getCourse()));
+//					boolean b4 = found.contains(courseSlot.getCourse().getName());
+//					if(  b1	&& b2 && (b3 || b4)){
+//						courseSlot.addStudent(student);
+//						student.addSlot(courseSlot);
+//						found.add(courseSlot.getCourse().getName());
+//						backtrace.push(student);
+//					}
 				}
 				
 				// Fall Student konnte nicht gesetzt werden
