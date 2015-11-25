@@ -17,5 +17,6 @@
 	<classpathentry kind="lib" path="C:/Users/Hex-3-En/EclipseConfigs/eclipseLunaClean/plugins/org.eclipse.core.databinding_1.4.2.v20140729-1044.jar" sourcepath="C:/Users/Hex-3-En/EclipseConfigs/eclipseLunaClean/plugins/org.eclipse.core.databinding_1.4.2.v20140729-1044.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Hex-3-En/EclipseConfigs/eclipseLunaClean/plugins/org.eclipse.core.databinding.observable_1.4.1.v20140210-1835.jar" sourcepath="C:/Users/Hex-3-En/EclipseConfigs/eclipseLunaClean/plugins/org.eclipse.core.databinding.observable_1.4.1.v20140210-1835.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Hex-3-En/EclipseConfigs/eclipseLunaClean/plugins/org.eclipse.jface.databinding_1.6.200.v20140528-1422.jar" sourcepath="C:/Users/Hex-3-En/EclipseConfigs/eclipseLunaClean/plugins/org.eclipse.jface.databinding_1.6.200.v20140528-1422.jar"/>
+	<classpathentry kind="lib" path="swing2swt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

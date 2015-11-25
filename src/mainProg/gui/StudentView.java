@@ -1,40 +1,40 @@
 package mainProg.gui;
 
-import mainProg.gui.studViewParts.StudentTableTemplate;
-import mainProg.gui.timeTableParts.TimeTableSlot;
-import mainProg.gui.timeTableParts.TimeTableTemplate;
-
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 
 import simuClasses.CourseSlot;
 import simuClasses.StudCollection;
-import simuClasses.TimeTable;
-
-import org.eclipse.swt.layout.FillLayout;
+import simuClasses.Student;
 
 public class StudentView {
-
 	protected Object result;
-	protected Shell shell;
-	private StudentTableTemplate table;
-
-	/**
-	 * Create the dialog.
-	 * @param parent
-	 * @param style
-	 */
-	public StudentView(StudCollection SC) {
+	private Shell shell;
+	private String[] COURSES = {"A", "B", "C"};
+	StudCollection SC;
+	Display display;
+	Color yellow;
+	Color red;
+	
+	public StudentView(StudCollection sc){
+		this.SC = sc;
 		shell = new Shell();
 		shell.setText("Student View");
-		createContents(SC);
+		display = display.getCurrent();
+		red = display.getSystemColor(SWT.COLOR_RED);
+		yellow = display.getSystemColor(SWT.COLOR_YELLOW);
+		createContents();
 	}
-
-	/**
-	 * Open the dialog.
-	 * @return the result
-	 */
+	
 	public Object open() {
 		shell.open();
 		shell.layout();
@@ -46,18 +46,46 @@ public class StudentView {
 		}
 		return result;
 	}
-
-	/**
-	 * Create contents of the dialog.
-	 */
-	private void createContents(StudCollection SC) {
-		//shell = new Shell(getParent(), getStyle());
-		shell.setSize(400, 240);
-		//shell.setText(getText());
-		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
-		table = new StudentTableTemplate(shell, SWT.NONE, SC);
-
-	}
 	
-	
+	private void createContents() {
+	    shell.setSize(300, 600);
+	    shell.setLayout(new FillLayout());
+	    shell.setText("Students Slots View");
+	    
+
+	    Table table = new Table(shell, SWT.BORDER | SWT.V_SCROLL);
+	    table.setHeaderVisible(true);
+	    String[] titles = { "StudID", "Course A", "Course B", "Course C" };
+
+	    for (int i = 0; i < titles.length; i++) {
+	      TableColumn column = new TableColumn(table, SWT.NULL);
+	      column.setText(titles[i]);
+	    }
+
+	    for(Student s : SC.getAllStuds()){
+	    	TableItem item = new TableItem(table, SWT.NULL);
+	    	item.setText(0, s.getID() + "");
+	    	
+	    	for(int i = 1; i < 4; i++){
+				item.setText(i, "NONE");
+				for(CourseSlot cs : s.getMySlots()){
+					if(cs.getCourse().getName() == COURSES[i-1]){
+						item.setText(i,cs.getTimeSlot() + "");
+					}
+				}
+			}
+	    	if(item.getText(1).equals(item.getText(2)) || item.getText(1).equals(item.getText(3)) || item.getText(2).equals(item.getText(3))){
+	    		if((item.getText(1) != "NONE" && item.getText(2) != "NONE") || (item.getText(1) != "NONE" && item.getText(3) != "NONE") || (item.getText(2) != "NONE" && item.getText(3) != "NONE")){
+		    		item.setBackground(red);
+		    	}
+	    	}
+	    	
+	    }
+
+	    for (int i = 0; i < titles.length; i++) {
+	      table.getColumn(i).pack();
+	    }
+
+
+	  }
 }
