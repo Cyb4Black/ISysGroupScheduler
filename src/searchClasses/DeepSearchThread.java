@@ -64,32 +64,18 @@ public class DeepSearchThread extends Thread {
 				Student student = tempStuds.get(myRand.nextInt(tempStuds.size()));
 				List<String> found = new LinkedList<String>();
 				for (CourseSlot courseSlot : AllCourses) {
-					if(!(student.getCourses().contains(courseSlot.getCourse())) || found.contains(courseSlot.getCourse().getName()))continue;
-					// Fall Student hat noch keine Termine und Termin ist noch
-					// nicht voll
-					if (student.getMySlots().isEmpty()
-							&& !(courseSlot.isFilled())) {
+					
+					// Fall Student hat noch keinen Termin von diesem Fach
+					// UND belegt noch keinen Termin zur gleichen Uhrzeit
+					// UND Termin ist noch nicht voll
+					if(  student.gotTime(courseSlot.getTimeSlot()) && (!courseSlot.isFilled()) && (!(student.getCourses().contains(courseSlot.getCourse())) || found.contains(courseSlot.getCourse().getName()))){
 						courseSlot.addStudent(student);
 						student.addSlot(courseSlot);
 						found.add(courseSlot.getCourse().getName());
 						backtrace.push(student);
 					}
-					for (CourseSlot StudentSlot : student.getMySlots()) {
-						// Fall Student hat noch keinen Termin von diesem Fach
-						// UND belegt noch keinen Termin zur gleichen Uhrzeit
-						// UND Termin ist noch nicht voll
-						if (StudentSlot.getCourse() != courseSlot.getCourse()
-								&& StudentSlot.getTimeSlot() != courseSlot
-										.getTimeSlot()
-								&& !(courseSlot.isFilled())) {
-							courseSlot.addStudent(student);
-							student.addSlot(courseSlot);
-							found.add(courseSlot.getCourse().getName());
-							backtrace.push(student);
-							break;
-						}
-					}
 				}
+				
 				// Fall Student konnte nicht gesetzt werden
 				if (student.getMySlots().size() != student.getCourses().size()) {
 					//remove actual Stud from backtrace and save for new try
