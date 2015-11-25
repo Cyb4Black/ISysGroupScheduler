@@ -3,6 +3,14 @@ package simuClasses;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Eine Klasse, welche ein Fach simuliert. Sie enthält einen Namen, die Wahrscheinlichkeit mit dem
+ * das Fach belegt wird, eine Liste mit allen zugehörigen Praktikumsterminen und eine Liste mit den Studenten
+ * die dieses Fach belegen.
+ * 
+ * @author Willnow & Selle
+ *
+ */
 public class Course {
 	private String Name;
 	private double Chance;

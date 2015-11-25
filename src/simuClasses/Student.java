@@ -3,6 +3,13 @@ package simuClasses;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Eine Klasse, welche einen Studenten simuliert.
+ * Der Student enthält seine ID, seine Fächer und seine Praktikumstermine
+ *
+ * @author Willnow & Selle
+ */
+
 public class Student {
 	private int ID;
 	private List<Course> Courses = new LinkedList<Course>();

@@ -2,6 +2,13 @@ package simuClasses;
 
 import java.util.LinkedList;
 import java.util.List;
+/**
+ * Eine Klasse, welche eine Menge von Studenten simuliert. Sie enthält listen mit allen Studenten,
+ * Studenten mit drei Fächern, Studenten mit zwei Fächern und Studenten mit einem Fach.
+ * 
+ * @author Willnow & Selle
+ *
+ */
 
 public class StudCollection {
 	private List<Student> allStuds = new LinkedList<Student>();

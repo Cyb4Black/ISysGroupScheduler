@@ -1,5 +1,13 @@
 package simuClasses;
 
+/**
+ * Eine Klasse, welche die Beziehung zwischen zwei Studenten simuliert. Sie enthält die IDs der
+ * Studenten und den Glückswert als double.
+ * 
+ * @author Willnow & Selle
+ *
+ */
+
 public class HappinessPairing {
 	private int IDx;
 	private int IDy;
