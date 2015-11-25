@@ -62,9 +62,12 @@ public class DeepSearchThread extends Thread {
 			//for (Student student : tempStuds) {
 			while (!(tempStuds.isEmpty())) {
 				Student student = tempStuds.get(myRand.nextInt(tempStuds.size()));
+				List<CourseSlot> tempCourses = new LinkedList<CourseSlot>();
+				tempCourses.addAll(AllCourses);
 				List<String> found = new LinkedList<String>();
-				for (CourseSlot courseSlot : AllCourses) {
-					
+//				for (CourseSlot courseSlot : AllCourses) {
+				while(!(tempCourses.isEmpty())){
+					CourseSlot courseSlot = tempCourses.get(myRand.nextInt(tempCourses.size()));
 					// Fall Student hat noch keinen Termin von diesem Fach
 					// UND belegt noch keinen Termin zur gleichen Uhrzeit
 					// UND Termin ist noch nicht voll
@@ -77,6 +80,7 @@ public class DeepSearchThread extends Thread {
 						found.add(courseSlot.getCourse().getName());
 						backtrace.push(student);
 					}
+					tempCourses.remove(courseSlot);
 //					boolean b1 = student.gotTime(courseSlot.getTimeSlot());
 //					boolean b2 = !(courseSlot.isFilled());
 //					boolean b3 = !(student.getCourses().contains(courseSlot.getCourse()));
