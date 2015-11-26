@@ -116,7 +116,10 @@ public class DeepSearchThread extends Thread {
 						while (backtrace.remove(prevStud))
 							;
 						backStuds.add(prevStud);
+						tempStuds.remove(prevStud);
 					}
+					tempStuds.remove(student);
+					
 				} else {
 					tempStuds.remove(student);
 				}

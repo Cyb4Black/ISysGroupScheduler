@@ -77,7 +77,7 @@ public class CourseSlot {
 	public double getHappiness(){
 		double Happiness = 0;
 		for (int i = 0; i < myStuds.size(); i++) {
-			for(int j=1; j < myStuds.size(); j++){
+			for(int j=i+1; j < myStuds.size(); j++){
 				Happiness += GlobalHappinessList.getHpById(myStuds.get(i).getID(), myStuds.get(j).getID()).getHappiness(); 
 			}
 		}

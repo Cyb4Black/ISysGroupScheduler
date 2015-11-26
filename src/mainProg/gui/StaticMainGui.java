@@ -249,6 +249,6 @@ public class StaticMainGui extends AbstractMain{
 		StatGenPool SGP = new StatGenPool(Integer.parseInt(chooseStressLevel.getText()));
 		SGP.run();
 		long stop = System.currentTimeMillis();
-		System.out.println(String.format("%.6g%n", (stop - start)));
+		System.out.println((stop - start)/1000);
 	}
 }
