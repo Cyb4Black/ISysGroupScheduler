@@ -29,7 +29,7 @@ public class StudCollection {
 			threeCourseStuds.add(student);
 			break;
 		default:
-			System.out.println("Error: CourseCount doesn't match any case!");
+//			System.out.println("Error: CourseCount doesn't match any case!");
 		}
 	}
 	

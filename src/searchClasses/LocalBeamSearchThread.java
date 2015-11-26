@@ -73,9 +73,9 @@ public class LocalBeamSearchThread extends Thread {
 //						+ allCourseSlots.size() + "fertig.");
 			}
 			tempSlots1.remove(CS1);
-			System.out.println(this.getId() + ": TS1 "
-					+ (allCourseSlots.size() - tempSlots1.size()) + " von "
-					+ allCourseSlots.size() + "fertig.");
+//			System.out.println(this.getId() + ": TS1 "
+//					+ (allCourseSlots.size() - tempSlots1.size()) + " von "
+//					+ allCourseSlots.size() + "fertig.");
 		}
 
 		resultTableSet.add(myResultTable);

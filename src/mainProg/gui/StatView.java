@@ -38,7 +38,7 @@ public class StatView {
 		this.LC = lc;
 		shell = new Shell();
 		shell.setText("Student View");
-		display = display.getCurrent();
+		display = Display.getCurrent();
 		red = display.getSystemColor(SWT.COLOR_RED);
 		yellow = display.getSystemColor(SWT.COLOR_YELLOW);
 		createContents();

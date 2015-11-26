@@ -1,6 +1,7 @@
 package mainProg.gui;
 
 import mainProg.core.AbstractMain;
+import mainProg.core.StatGenPool;
 
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
@@ -25,6 +26,9 @@ public class StaticMainGui extends AbstractMain{
 	Button btnInitialize;
 	Button btnShowStudents;
 	Button btnShowStats;
+	Combo chooseStressLevel;
+	private Label lblStressCycles;
+	private Button btnStress;
 
 	/**
 	 * Launch the application.
@@ -186,6 +190,27 @@ public class StaticMainGui extends AbstractMain{
 				showStats();
 			}
 		});
+		
+		chooseStressLevel = new Combo(shell, SWT.NONE);
+		chooseStressLevel.setItems(new String[] {"1","10", "100", "500", "1000"});
+		chooseStressLevel.setBounds(99, 87, 55, 23);
+		chooseStressLevel.select(0);
+		
+		lblStressCycles = new Label(shell, SWT.NONE);
+		lblStressCycles.setText("Stress Cycles:");
+		lblStressCycles.setBounds(14, 90, 81, 15);
+		
+		btnStress = new Button(shell, SWT.NONE);
+		btnStress.setText("STRESS");
+		btnStress.setBounds(108, 126, 75, 25);
+		btnStress.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				statusShow.setText("Stessing now! Please wait!");
+				startStress();
+				statusShow.setText("TOTALLY STRESSED!!!");
+			}
+		});
+		
 	}
 	
 	private void showInitialTable(){
@@ -217,5 +242,13 @@ public class StaticMainGui extends AbstractMain{
 	
 	private void searchStart(){
 		this.startSearch(btnIgnoreHappiness.getSelection());
+	}
+	
+	private void startStress(){
+		long start = System.currentTimeMillis();
+		StatGenPool SGP = new StatGenPool(Integer.parseInt(chooseStressLevel.getText()));
+		SGP.run();
+		long stop = System.currentTimeMillis();
+		System.out.println(String.format("%.6g%n", (stop - start)));
 	}
 }

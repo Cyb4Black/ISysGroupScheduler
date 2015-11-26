@@ -37,7 +37,7 @@ public class DeepSearchCore {
 			try {
 				dst.join();
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 		
