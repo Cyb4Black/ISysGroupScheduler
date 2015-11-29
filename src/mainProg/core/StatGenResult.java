@@ -2,10 +2,9 @@ package mainProg.core;
 
 public class StatGenResult {
 	private int id;
-	private double worstRandomHappiness, bestRandomHappiness,
-			allRandomHappiness = 0;
-	private double worstOptHappiness, bestOptHappiness, allOptHappiness = 0;
-
+	private double bestRandomHappiness = 0, allRandomHappiness = 0;
+	private double bestOptHappiness = 0, allOptHappiness = 0;
+	private double worstRandomHappiness = 99999, worstOptHappiness = 99999;
 	public StatGenResult(int ID) {
 		this.id = ID;
 	}

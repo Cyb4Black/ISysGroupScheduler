@@ -13,6 +13,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.widgets.Spinner;
 
 public class StaticMainGui extends AbstractMain{
 
@@ -26,7 +27,7 @@ public class StaticMainGui extends AbstractMain{
 	Button btnInitialize;
 	Button btnShowStudents;
 	Button btnShowStats;
-	Combo chooseStressLevel;
+	Spinner chooseStressLevel;
 	private Label lblStressCycles;
 	private Button btnStress;
 
@@ -191,10 +192,11 @@ public class StaticMainGui extends AbstractMain{
 			}
 		});
 		
-		chooseStressLevel = new Combo(shell, SWT.NONE);
-		chooseStressLevel.setItems(new String[] {"1","10", "100", "500", "1000"});
+		chooseStressLevel = new Spinner(shell, SWT.NONE);
 		chooseStressLevel.setBounds(99, 87, 55, 23);
-		chooseStressLevel.select(0);
+		chooseStressLevel.setMinimum(5);
+		chooseStressLevel.setMaximum(1000);
+		chooseStressLevel.setIncrement(5);
 		
 		lblStressCycles = new Label(shell, SWT.NONE);
 		lblStressCycles.setText("Stress Cycles:");

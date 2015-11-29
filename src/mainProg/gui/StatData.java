@@ -56,7 +56,7 @@ public class StatData {
 
 		Table table = new Table(shell, SWT.BORDER | SWT.V_SCROLL);
 		table.setHeaderVisible(true);
-		String[] titles = { "Overlap", "best Random", "worst Random",
+		String[] titles = { "Overlap", "worst Random", "best Random",
 				"Random middle", "worst Optimum", "best Optimum", "Optimum middle"};
 
 		for (int i = 0; i < titles.length; i++) {
@@ -68,11 +68,11 @@ public class StatData {
 		for(StatGenResult result : results){
 			TableItem item = new TableItem(table, SWT.NULL);
 			item.setText(0, OVERLAPS[result.getId()] + " " + result.getId());
-			item.setText(1, String.format("%.6g%n", result.getBestRandomHappiness()));
-			item.setText(2, String.format("%.6g%n", result.getWorstRandomHappiness()));
+			item.setText(1, String.format("%.6g%n", result.getWorstRandomHappiness()));
+			item.setText(2, String.format("%.6g%n", result.getBestRandomHappiness()));
 			item.setText(3, String.format("%.6g%n", (result.getAllRandomHappiness() / cycles)));
-			item.setText(4, String.format("%.6g%n", result.getBestOptHappiness()));
-			item.setText(5, String.format("%.6g%n", result.getWorstOptHappiness()));
+			item.setText(4, String.format("%.6g%n", result.getWorstOptHappiness()));
+			item.setText(5, String.format("%.6g%n", result.getBestOptHappiness()));
 			item.setText(6, String.format("%.6g%n", (result.getAllOptHappiness() / cycles)));
 		}
 
