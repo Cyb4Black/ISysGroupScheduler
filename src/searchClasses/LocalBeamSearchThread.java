@@ -3,7 +3,6 @@ package searchClasses;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import java.util.Stack;
 
 import simuClasses.*;
 
@@ -65,11 +64,46 @@ public class LocalBeamSearchThread extends Thread {
 //					+ (allCourseSlots.size() - tempSlots1.size()) + " von "
 //					+ allCourseSlots.size() + "fertig.");
 		}
+		
+		
+		// for (CourseSlot CS1 : allCourseSlots) {
+				tempSlots1.addAll(allCourseSlots);
+				while (!(tempSlots1.isEmpty())) {
+					CourseSlot CS1 = tempSlots1.get(myRand.nextInt(tempSlots1.size()));
+
+					// for (CourseSlot CS2 : allCourseSlots) {
+					tempSlots2.addAll(allCourseSlots);
+					while (!(tempSlots2.isEmpty())) {
+						CourseSlot CS2 = tempSlots2.get(myRand.nextInt(tempSlots2
+								.size()));
+
+						// Fall CS1 und CS2 haben den selben Kurs sind aber nicht der
+						// selbe Praktikumstermin
+						if (CS1.getCourse() == CS2.getCourse() && CS1 != CS2) {
+							do {
+								
+								swap = swapEveryStud(CS1, CS2);
+
+							} while (swap);
+
+						}
+						tempSlots2.remove(CS2);
+//						System.out.println(this.getId() + ": TS2 "
+//								+ (allCourseSlots.size() - tempSlots2.size()) + " von "
+//								+ allCourseSlots.size() + "fertig.");
+					}
+					tempSlots1.remove(CS1);
+//					System.out.println(this.getId() + ": TS1 "
+//							+ (allCourseSlots.size() - tempSlots1.size()) + " von "
+//							+ allCourseSlots.size() + "fertig.");
+				}
 
 		resultTableSet.add(myResultTable);
 		resultStudSet.add(myTempCollection);
 
 	}
+
+
 
 
 	private void threadSafeClone(TimeTable myResultTable,
@@ -89,6 +123,33 @@ public class LocalBeamSearchThread extends Thread {
 
 		}
 	}
+	
+	
+	/**
+	 * Eine Hilfsmethode welche zwei Studenten von zwei Praktikumsterminen tauscht.
+	 * Falls dies zu einem höheren Glückswert führt.
+	 * @param CS1 der erste Praktikumstermin
+	 * @param CS2 der zweite Praktikumstermin
+	 * @return true wenn getauscht wurde, false wenn nicht
+	 */
+	private boolean swapEveryStud(CourseSlot CS1, CourseSlot CS2) {
+
+
+		for (Student stud1 : CS1.getStudents()) {
+			
+			for(Student stud2 : CS2.getStudents()){
+				if((getTheoryHappiness(CS1, stud1, stud1) + getTheoryHappiness(CS2, stud2, stud2) < getTheoryHappiness(CS1, stud2, stud1) + getTheoryHappiness(CS2, stud1, stud2)) && stud1.gotTime(CS2.getTimeSlot())  && stud2.gotTime(CS1.getTimeSlot())){
+					
+					return swapStud(CS1, stud1, CS2, stud2);
+				}
+			}
+				
+		}
+		
+			
+		return false;
+	}
+
 
 	/**
 	 * Eine Hilfsmethode welche die jeweiligen Unglücklichsten Studenten von zwei Praktikumsterminen tauscht.
