@@ -23,16 +23,13 @@ public class LocalBeamSearchThread extends Thread {
 	}
 
 	public void run() {
-		double HappinessOld;
-		double HappinessNew;
+		boolean swap;
 		TimeTable myResultTable = MyTimeTable.clone();
 		StudCollection myTempCollection = MyStuds.clone();
 		
 		threadSafeClone(myResultTable, myTempCollection);
 		
 		List<CourseSlot> allCourseSlots = myResultTable.getAllCourses();
-		Student tempStud1;
-		Student tempStud2;
 		List<CourseSlot> tempSlots1 = new LinkedList<CourseSlot>();
 		List<CourseSlot> tempSlots2 = new LinkedList<CourseSlot>();
 		Random myRand = new Random();
@@ -52,20 +49,11 @@ public class LocalBeamSearchThread extends Thread {
 				// selbe Praktikumstermin
 				if (CS1.getCourse() == CS2.getCourse() && CS1 != CS2) {
 					do {
-						HappinessOld = CS1.getHappiness() + CS2.getHappiness();
+						
+						swap = swapLeastHappyStud(CS1, CS2);
 
-						tempStud1 = getLeastHappyFreeStud(CS1,
-								CS2.getTimeSlot());
-						tempStud2 = getLeastHappyFreeStud(CS2,
-								CS1.getTimeSlot());
+					} while (swap);
 
-						swapStud(CS1, tempStud1, CS2, tempStud2);
-
-						HappinessNew = CS1.getHappiness() + CS2.getHappiness();
-
-					} while (HappinessNew > HappinessOld);
-
-					swapStud(CS2, tempStud1, CS1, tempStud2);
 				}
 				tempSlots2.remove(CS2);
 //				System.out.println(this.getId() + ": TS2 "
@@ -82,6 +70,7 @@ public class LocalBeamSearchThread extends Thread {
 		resultStudSet.add(myTempCollection);
 
 	}
+
 
 	private void threadSafeClone(TimeTable myResultTable,
 			StudCollection myTempCollection) {
@@ -101,6 +90,26 @@ public class LocalBeamSearchThread extends Thread {
 		}
 	}
 
+	/**
+	 * Eine Hilfsmethode welche die jeweiligen Unglücklichsten Studenten von zwei Praktikumsterminen tauscht.
+	 * Falls dies zu einem höheren Glückswert führt.
+	 * @param CS1 Der erste Praktikumstermin
+	 * @param CS2 Der zweite Praktikumstermin
+	 * @return true wenn getauscht wurde, false wenn nicht
+	 */
+	private boolean swapLeastHappyStud(CourseSlot CS1, CourseSlot CS2) {
+		Student LeastHappyStud1 = getLeastHappyFreeStud(CS1, CS2.getTimeSlot());
+		Student LeastHappyStud2 = getLeastHappyFreeStud(CS2, CS1.getTimeSlot());
+
+		if(getTheoryHappiness(CS1, LeastHappyStud1, LeastHappyStud1) + getTheoryHappiness(CS2, LeastHappyStud2, LeastHappyStud2) < getTheoryHappiness(CS1, LeastHappyStud2, LeastHappyStud1) + getTheoryHappiness(CS2, LeastHappyStud1, LeastHappyStud2)){
+			
+			return swapStud(CS1, LeastHappyStud1, CS2, LeastHappyStud2);
+		}
+			
+		return false;
+	}
+	
+	
 	/**
 	 * Eine Hilfsmethode welche zwei Studenten in zwei Praktikumsterminen
 	 * tauscht
@@ -186,4 +195,26 @@ public class LocalBeamSearchThread extends Thread {
 		return LeastHappyStud;
 	}
 
+
+	/**
+	 * Eine Hilfsmethode welche die theoretischen neuen Glückswerte für eine Gruppe ausrechnet, falls der newStud mit dem oldStud tauscht.
+	 * @param CS der zu überprüfende Praktikumstermin
+	 * @param newStud der Student für den die Glückswerte ausgerechnet werden
+	 * @param oldStud der Student welcher in der Gruppe ignoriert wird
+	 * @return die summe der Glückswerte
+	 */
+	private double getTheoryHappiness(CourseSlot CS, Student newStud, Student oldStud){
+		HappinessList HL = CS.getHappyMatrix();
+		double TheoryHappiness = 0;
+		
+		
+		for (Student stud : CS.getStudents()) {
+			if(stud.getID() != newStud.getID() && stud.getID() != oldStud.getID()){
+				TheoryHappiness += HL.getHpById(stud.getID(), newStud.getID()).getHappiness();
+			}
+		}
+		
+		return TheoryHappiness;
+		
+	}
 }
