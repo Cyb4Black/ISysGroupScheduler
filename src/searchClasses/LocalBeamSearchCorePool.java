@@ -10,7 +10,7 @@ public class LocalBeamSearchCorePool {
 
 	public void generateBeamSearchCores(TimeTable outputTable,
 			StudCollection studCol, List<TimeTable> initialTableSet,
-			List<StudCollection> initialStudSet) {
+			List<StudCollection> initialStudSet, boolean op) {
 		List<LocalBeamSearchCore> threads = new ArrayList<LocalBeamSearchCore>();
 		List<TimeTable> resultTableSet = new LinkedList<TimeTable>();
 		List<StudCollection> resultStudSet = new LinkedList<StudCollection>();
@@ -19,7 +19,7 @@ public class LocalBeamSearchCorePool {
 
 		for (int i = 0; i < 4; i++) {
 			threads.add(new LocalBeamSearchCore(initialStudSet.get(i),
-					initialTableSet.get(i), resultTableSet, resultStudSet));
+					initialTableSet.get(i), resultTableSet, resultStudSet, op));
 		}
 
 		for (LocalBeamSearchCore LBSC : threads) {

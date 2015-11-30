@@ -11,13 +11,14 @@ public class LocalBeamSearchCore extends Thread {
 	private TimeTable MyTimeTable;
 	private List<TimeTable> resultTableSet;
 	private List<StudCollection> resultStudSet;
+	private boolean overPower;
 	
-	public LocalBeamSearchCore(StudCollection SC, TimeTable TT, List<TimeTable> rTS, List<StudCollection> rSS){
+	public LocalBeamSearchCore(StudCollection SC, TimeTable TT, List<TimeTable> rTS, List<StudCollection> rSS, boolean op){
 		this.MyStuds=SC;
 		this.MyTimeTable=TT;
 		this.resultTableSet=rTS;
 		this.resultStudSet=rSS;
-		
+		this.overPower = op;
 	}
 	
 	public void run(){
@@ -25,7 +26,7 @@ public class LocalBeamSearchCore extends Thread {
 		
 		for (int i = 0; i < 3; i++) {
 			threads.add(new LocalBeamSearchThread(MyStuds,
-					MyTimeTable, resultTableSet, resultStudSet));
+					MyTimeTable, resultTableSet, resultStudSet, overPower));
 		}
 
 		for (LocalBeamSearchThread LBST : threads) {

@@ -4,14 +4,10 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.widgets.Text;
-
 import simuClasses.CourseSlot;
 import simuClasses.StudCollection;
 import simuClasses.Student;
@@ -25,6 +21,7 @@ public class StudentView {
 	Color yellow;
 	Color red;
 	
+	@SuppressWarnings("static-access")
 	public StudentView(StudCollection sc){
 		this.SC = sc;
 		shell = new Shell();

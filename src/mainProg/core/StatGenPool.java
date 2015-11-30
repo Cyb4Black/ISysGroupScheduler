@@ -3,37 +3,33 @@ package mainProg.core;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.locks.ReentrantLock;
 
-import mainProg.gui.ProgressView;
-import mainProg.gui.StatData;
-
-public class StatGenPool {
+public class StatGenPool implements Runnable{
 	
-//	ProgressView globPV;
 	private int MAXOVERLAP = 6;
 	private int cycles;
+	private boolean overPower;
 	LockableProgressCounter progCount;
 	LinkedList<StatGenResult> results;
 
-	public StatGenPool(int cyc) {
+	public StatGenPool(int cyc, boolean op, LinkedList<StatGenResult> r, LockableProgressCounter pc) {
 		this.cycles = cyc;
-//		 globPV = new ProgressView(cycles);
-		this.progCount = new LockableProgressCounter(new ReentrantLock(), cycles);
-		results = new LinkedList<StatGenResult>();
+		this.overPower = op;
+		this.progCount = pc;
+//		this.progCount = new LockableProgressCounter(new ReentrantLock(), cycles);
+		this.results = r;
 	}
 	
 	public void run(){
+		long start = System.currentTimeMillis();
 		List<Thread> threads = new ArrayList<Thread>();
 		for(int i = 0; i < MAXOVERLAP; i++){
-			threads.add(new Thread(new StatGenThread(i, cycles, progCount, results)));
+			threads.add(new Thread(new StatGenThread(i, cycles, progCount, results, overPower)));
 		}
-//		Thread progT = new Thread(globPV);
-//		progT.start();
 		for(Thread t : threads){
 			t.start();
 		}
-//		threads.add(progT);
+
 		for(Thread t : threads){
 			try {
 				t.join();
@@ -41,8 +37,8 @@ public class StatGenPool {
 				e.printStackTrace();
 			}
 		}
-		StatData sd = new StatData(results, cycles);
-		sd.open();
+		long stop = System.currentTimeMillis();
+		System.out.println((stop - start)/1000);
 	}
 
 }

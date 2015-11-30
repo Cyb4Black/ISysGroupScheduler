@@ -11,14 +11,15 @@ public class LocalBeamSearchThread extends Thread {
 	private TimeTable MyTimeTable;
 	private List<TimeTable> resultTableSet;
 	private List<StudCollection> resultStudSet;
+	private boolean overPower;
 
 	public LocalBeamSearchThread(StudCollection SC, TimeTable TT,
-			List<TimeTable> rTS, List<StudCollection> rSS) {
+			List<TimeTable> rTS, List<StudCollection> rSS, boolean op) {
 		this.MyStuds = SC;
 		this.MyTimeTable = TT;
 		this.resultTableSet = rTS;
 		this.resultStudSet = rSS;
-
+		this.overPower = op;
 	}
 
 	public void run() {
@@ -67,6 +68,7 @@ public class LocalBeamSearchThread extends Thread {
 		
 		
 		// for (CourseSlot CS1 : allCourseSlots) {
+		if(overPower){//only use this part for REALLY optimized search!
 				tempSlots1.addAll(allCourseSlots);
 				while (!(tempSlots1.isEmpty())) {
 					CourseSlot CS1 = tempSlots1.get(myRand.nextInt(tempSlots1.size()));
@@ -97,7 +99,7 @@ public class LocalBeamSearchThread extends Thread {
 //							+ (allCourseSlots.size() - tempSlots1.size()) + " von "
 //							+ allCourseSlots.size() + "fertig.");
 				}
-
+		}
 		resultTableSet.add(myResultTable);
 		resultStudSet.add(myTempCollection);
 
@@ -127,7 +129,7 @@ public class LocalBeamSearchThread extends Thread {
 	
 	/**
 	 * Eine Hilfsmethode welche zwei Studenten von zwei Praktikumsterminen tauscht.
-	 * Falls dies zu einem höheren Glückswert führt.
+	 * Falls dies zu einem hï¿½heren Glï¿½ckswert fï¿½hrt.
 	 * @param CS1 der erste Praktikumstermin
 	 * @param CS2 der zweite Praktikumstermin
 	 * @return true wenn getauscht wurde, false wenn nicht
@@ -152,8 +154,8 @@ public class LocalBeamSearchThread extends Thread {
 
 
 	/**
-	 * Eine Hilfsmethode welche die jeweiligen Unglücklichsten Studenten von zwei Praktikumsterminen tauscht.
-	 * Falls dies zu einem höheren Glückswert führt.
+	 * Eine Hilfsmethode welche die jeweiligen Unglï¿½cklichsten Studenten von zwei Praktikumsterminen tauscht.
+	 * Falls dies zu einem hï¿½heren Glï¿½ckswert fï¿½hrt.
 	 * @param CS1 Der erste Praktikumstermin
 	 * @param CS2 Der zweite Praktikumstermin
 	 * @return true wenn getauscht wurde, false wenn nicht
@@ -207,14 +209,14 @@ public class LocalBeamSearchThread extends Thread {
 	}
 
 	/**
-	 * Eine Hilfsmethode, welche ausrechnet wie glücklich ein Student in einem
+	 * Eine Hilfsmethode, welche ausrechnet wie glï¿½cklich ein Student in einem
 	 * Praktikumstermin ist
 	 * 
 	 * @param CS
-	 *            der zu überprüfende Praktikumstermin
+	 *            der zu ï¿½berprï¿½fende Praktikumstermin
 	 * @param stud1
-	 *            der zu überprüfende Student
-	 * @return den Glückswert als double
+	 *            der zu ï¿½berprï¿½fende Student
+	 * @return den Glï¿½ckswert als double
 	 */
 	private double getStudHappiness(CourseSlot CS, Student stud1) {
 		HappinessList HL = CS.getHappyMatrix();
@@ -231,15 +233,15 @@ public class LocalBeamSearchThread extends Thread {
 	}
 
 	/**
-	 * Eine Hilfsmethode welche den unglücklichsten Student aus einem
-	 * Praktikumstermin zurück gibt welcher in einen bestimmten ZeitSlot
+	 * Eine Hilfsmethode welche den unglï¿½cklichsten Student aus einem
+	 * Praktikumstermin zurï¿½ck gibt welcher in einen bestimmten ZeitSlot
 	 * wechseln kann
 	 * 
 	 * @param CS
-	 *            der zu überprüfende Praktikumstermin
+	 *            der zu ï¿½berprï¿½fende Praktikumstermin
 	 * @param i
 	 *            der bestimmte ZeitSlot
-	 * @return den unglücklichsten Student oder ein Null Objekt falls kein
+	 * @return den unglï¿½cklichsten Student oder ein Null Objekt falls kein
 	 *         Student in den bestimmten ZeitSlot tauschen kann
 	 */
 	private Student getLeastHappyFreeStud(CourseSlot CS, int i) {
@@ -258,11 +260,11 @@ public class LocalBeamSearchThread extends Thread {
 
 
 	/**
-	 * Eine Hilfsmethode welche die theoretischen neuen Glückswerte für eine Gruppe ausrechnet, falls der newStud mit dem oldStud tauscht.
-	 * @param CS der zu überprüfende Praktikumstermin
-	 * @param newStud der Student für den die Glückswerte ausgerechnet werden
+	 * Eine Hilfsmethode welche die theoretischen neuen Glï¿½ckswerte fï¿½r eine Gruppe ausrechnet, falls der newStud mit dem oldStud tauscht.
+	 * @param CS der zu ï¿½berprï¿½fende Praktikumstermin
+	 * @param newStud der Student fï¿½r den die Glï¿½ckswerte ausgerechnet werden
 	 * @param oldStud der Student welcher in der Gruppe ignoriert wird
-	 * @return die summe der Glückswerte
+	 * @return die summe der Glï¿½ckswerte
 	 */
 	private double getTheoryHappiness(CourseSlot CS, Student newStud, Student oldStud){
 		HappinessList HL = CS.getHappyMatrix();

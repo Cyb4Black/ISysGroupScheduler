@@ -1,13 +1,10 @@
 package mainProg.gui;
 
 import java.util.LinkedList;
-import java.util.List;
-
 import mainProg.core.ResultListComparator;
 import mainProg.core.StatGenResult;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -15,7 +12,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-public class StatData {
+public class StatData{
 	protected Object result;
 	private Shell shell;
 	private String[] OVERLAPS = { "O 0", "O 1", "O 2", "O 3", "O 4", "O 5" };
@@ -23,18 +20,10 @@ public class StatData {
 	int cycles;
 	LinkedList<StatGenResult> results;
 	Display display;
-	Color yellow;
-	Color red;
 
 	public StatData(LinkedList<StatGenResult> in, int cyc) {
 		this.results = in;
 		this.cycles = cyc;
-		shell = new Shell();
-		shell.setText("Statistical Data");
-		display = Display.getCurrent();
-		red = display.getSystemColor(SWT.COLOR_RED);
-		yellow = display.getSystemColor(SWT.COLOR_YELLOW);
-		createContents();
 	}
 
 	public Object open() {
@@ -49,7 +38,8 @@ public class StatData {
 		return result;
 	}
 
-	private void createContents() {
+	public void createContents() {
+		shell = new Shell();
 		shell.setSize(370, 140);
 		shell.setLayout(new FillLayout());
 		shell.setText("Satistical Data View");
@@ -81,4 +71,5 @@ public class StatData {
 		}
 
 	}
+	
 }

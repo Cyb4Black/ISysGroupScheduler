@@ -2,8 +2,6 @@ package mainProg.core;
 
 import java.util.concurrent.locks.*;
 
-import mainProg.gui.ProgressView;
-
 public class LockableProgressCounter {
 	private Lock l;
 	private int count;
@@ -28,7 +26,7 @@ public class LockableProgressCounter {
 		l.lock();
 		try{
 			count++;
-			System.out.println(count + "/" + (globPV*12));
+//			System.out.println(count + "/" + (globPV*12));
 		}finally{
 			l.unlock();
 		}
