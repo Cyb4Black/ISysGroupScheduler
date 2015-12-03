@@ -2,8 +2,8 @@ package mainProg.core;
 
 public class StatGenResult {
 	private int id;
-	private double bestRandomHappiness = 0, allRandomHappiness = 0;
-	private double bestOptHappiness = 0, allOptHappiness = 0;
+	private double bestRandomHappiness = 0, allRandomHappiness = 0, averageRandHappiness = 0;
+	private double bestOptHappiness = 0, allOptHappiness = 0, averageOptHappiness = 0;
 	private double worstRandomHappiness = 99999, worstOptHappiness = 99999;
 	public StatGenResult(int ID) {
 		this.id = ID;
@@ -11,6 +11,22 @@ public class StatGenResult {
 	
 	public int getId(){
 		return this.id;
+	}
+	
+	public void addAverageRand(double in){
+		averageRandHappiness += in;
+	}
+	
+	public void addAverageOpt(double in){
+		averageOptHappiness += in;
+	}
+	
+	public double getAverageRand(){
+		return averageRandHappiness;
+	}
+	
+	public double getAverageOpt(){
+		return averageOptHappiness;
 	}
 
 	public void addRandomHappiness(double input) {

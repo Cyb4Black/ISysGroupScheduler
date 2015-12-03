@@ -40,14 +40,15 @@ public class StatData{
 
 	public void createContents() {
 		shell = new Shell();
-		shell.setSize(370, 140);
+		shell.setSize(560, 240);
 		shell.setLayout(new FillLayout());
 		shell.setText("Satistical Data View");
 
 		Table table = new Table(shell, SWT.BORDER | SWT.V_SCROLL);
 		table.setHeaderVisible(true);
-		String[] titles = { "Overlap", "worst Random", "best Random",
-				"Random middle", "worst Optimum", "best Optimum", "Optimum middle"};
+		String[] categories = {"worst Random", "best Random",
+				"Random middle", "AverageRandom/Student", "worst Optimum", "best Optimum", "Optimum middle", "AverageOpt/Student"};
+		String[] titles = {"Category", "Lvl. 0", "Lvl. 1", "Lvl. 2", "Lvl. 3", "Lvl. 4", "Lvl. 5"};
 
 		for (int i = 0; i < titles.length; i++) {
 			TableColumn column = new TableColumn(table, SWT.NULL);
@@ -55,16 +56,33 @@ public class StatData{
 		}
 		
 		results.sort(c);
-		for(StatGenResult result : results){
+		
+		for (int i = 0; i < categories.length; i++) {
 			TableItem item = new TableItem(table, SWT.NULL);
-			item.setText(0, OVERLAPS[result.getId()] + " " + result.getId());
-			item.setText(1, String.format("%.6g%n", result.getWorstRandomHappiness()));
-			item.setText(2, String.format("%.6g%n", result.getBestRandomHappiness()));
-			item.setText(3, String.format("%.6g%n", (result.getAllRandomHappiness() / cycles)));
-			item.setText(4, String.format("%.6g%n", result.getWorstOptHappiness()));
-			item.setText(5, String.format("%.6g%n", result.getBestOptHappiness()));
-			item.setText(6, String.format("%.6g%n", (result.getAllOptHappiness() / cycles)));
+			item.setText(0, categories[i]);
 		}
+		
+		for(StatGenResult result : results){
+			int col = result.getId() + 1;
+			table.getItem(0).setText(col, String.format("%.6g%n", result.getWorstRandomHappiness()));
+			table.getItem(1).setText(col, String.format("%.6g%n", result.getBestRandomHappiness()));
+			table.getItem(2).setText(col, String.format("%.6g%n", (result.getAllRandomHappiness() / cycles)));
+			table.getItem(3).setText(col, String.format("%.4g%n", (result.getAverageRand() / cycles)));
+			table.getItem(4).setText(col, String.format("%.6g%n", result.getWorstOptHappiness()));
+			table.getItem(5).setText(col, String.format("%.6g%n", result.getBestOptHappiness()));
+			table.getItem(6).setText(col, String.format("%.6g%n", (result.getAllOptHappiness() / cycles)));
+			table.getItem(7).setText(col, String.format("%.4g%n", (result.getAverageOpt() / cycles)));
+		}
+//		for(StatGenResult result : results){
+//			TableItem item = new TableItem(table, SWT.NULL);
+//			item.setText(0, OVERLAPS[result.getId()] + " " + result.getId());
+//			item.setText(1, String.format("%.6g%n", result.getWorstRandomHappiness()));
+//			item.setText(2, String.format("%.6g%n", result.getBestRandomHappiness()));
+//			item.setText(3, String.format("%.6g%n", (result.getAllRandomHappiness() / cycles)));
+//			item.setText(4, String.format("%.6g%n", result.getWorstOptHappiness()));
+//			item.setText(5, String.format("%.6g%n", result.getBestOptHappiness()));
+//			item.setText(6, String.format("%.6g%n", (result.getAllOptHappiness() / cycles)));
+//		}
 
 		for (int i = 0; i < titles.length; i++) {
 			table.getColumn(i).pack();
@@ -72,4 +90,12 @@ public class StatData{
 
 	}
 	
+	/**
+	 * Debugging-Method for getting into Design-View, cause known default-methods have been modified for explicit usage.
+	 * @wbp.parser.entryPoint
+	 */
+	public void showDesign(){
+		createContents();
+		open();
+	}
 }
