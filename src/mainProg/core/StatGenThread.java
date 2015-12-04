@@ -3,18 +3,16 @@ package mainProg.core;
 import java.util.List;
 
 import simuClasses.*;
-import mainProg.gui.ProgressView;
 
 public class StatGenThread extends AbstractMain implements Runnable {
 	StatGenResult result;
-	List<StatGenResult> resultSet;
+	LockableStatGenResultList resultSet;
 	LockableProgressCounter progCount;
-	ProgressView globPV;
 	private int cycles, myOverlap;
 	private boolean overPower;
 
 	public StatGenThread(int o, int cyc, LockableProgressCounter finishCount,
-			List<StatGenResult> results, boolean op) {
+			LockableStatGenResultList results, boolean op) {
 		this.progCount = finishCount;
 		this.cycles = cyc;
 		this.myOverlap = o;
@@ -30,13 +28,13 @@ public class StatGenThread extends AbstractMain implements Runnable {
 			this.startSearch(true, false);
 			this.result.addRandomHappiness(this.finalTable.getHappiness());
 			this.result.addAverageRand(calcAverageStudHappiness());
-			System.out.println("My OL:" + this.myOverlap + " My Happ: " + calcAverageStudHappiness());
+//			System.out.println("My OL:" + this.myOverlap + " My Happ: " + calcAverageStudHappiness());
 			progCount.pp();
 			// ---------------------------------------------------------------
 			this.startSearch(false, overPower);
 			this.result.addOptHappiness(this.finalTable.getHappiness());
 			this.result.addAverageOpt(calcAverageStudHappiness());
-			System.out.println("My OL:" + this.myOverlap + " My Happ: " + calcAverageStudHappiness());
+//			System.out.println("My OL:" + this.myOverlap + " My Happ: " + calcAverageStudHappiness());
 			progCount.pp();
 			// ---------------------------------------------------------------
 		}
@@ -65,7 +63,7 @@ public class StatGenThread extends AbstractMain implements Runnable {
 				ret += (tempPerStud / s.getMySlots().size());
 			}
 		}
-		System.out.println("My OL:" + this.myOverlap + " STC: " + studsToCount);
+//		System.out.println("My OL:" + this.myOverlap + " STC: " + studsToCount);
 		return (ret / studsToCount);
 	}
 

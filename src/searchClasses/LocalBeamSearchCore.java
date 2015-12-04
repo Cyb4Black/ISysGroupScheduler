@@ -9,15 +9,13 @@ import simuClasses.TimeTable;
 public class LocalBeamSearchCore extends Thread {
 	private StudCollection MyStuds;
 	private TimeTable MyTimeTable;
-	private List<TimeTable> resultTableSet;
-	private List<StudCollection> resultStudSet;
+	private LockableResultSet results;
 	private boolean overPower;
 	
-	public LocalBeamSearchCore(StudCollection SC, TimeTable TT, List<TimeTable> rTS, List<StudCollection> rSS, boolean op){
+	public LocalBeamSearchCore(StudCollection SC, TimeTable TT, LockableResultSet LRS, boolean op){
 		this.MyStuds=SC;
 		this.MyTimeTable=TT;
-		this.resultTableSet=rTS;
-		this.resultStudSet=rSS;
+		this.results = LRS;
 		this.overPower = op;
 	}
 	
@@ -26,7 +24,7 @@ public class LocalBeamSearchCore extends Thread {
 		
 		for (int i = 0; i < 3; i++) {
 			threads.add(new LocalBeamSearchThread(MyStuds,
-					MyTimeTable, resultTableSet, resultStudSet, overPower));
+					MyTimeTable, results, overPower));
 		}
 
 		for (LocalBeamSearchThread LBST : threads) {

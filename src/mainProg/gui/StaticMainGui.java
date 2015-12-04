@@ -5,6 +5,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import mainProg.core.AbstractMain;
 import mainProg.core.LockableProgressCounter;
+import mainProg.core.LockableStatGenResultList;
 import mainProg.core.StatGenPool;
 import mainProg.core.StatGenResult;
 
@@ -40,7 +41,7 @@ public class StaticMainGui extends AbstractMain {
 	LockableProgressCounter lpc;
 	private ProgressBar progressBar;
 	private Button btnResults;
-	LinkedList<StatGenResult> results;
+	LockableStatGenResultList results;
 
 	/**
 	 * Launch the application.
@@ -82,7 +83,7 @@ public class StaticMainGui extends AbstractMain {
 		shell.setText("Fcking Amazing GroupSchedule-GUI");
 		shell.setLayout(null);
 
-		results = new LinkedList<StatGenResult>();
+		results = new LockableStatGenResultList(new ReentrantLock());
 		Label lblStatus = new Label(shell, SWT.NONE);
 		btnShowInitialTable = new Button(shell, SWT.NONE);
 		btnIgnoreHappiness = new Button(shell, SWT.CHECK);
@@ -290,7 +291,7 @@ public class StaticMainGui extends AbstractMain {
 	}
 
 	private void showResults() {
-		StatData sd = new StatData(results, Integer.parseInt(chooseStressLevel
+		StatData sd = new StatData(results.getList(), Integer.parseInt(chooseStressLevel
 				.getText()));
 		sd.createContents();
 		sd.open();

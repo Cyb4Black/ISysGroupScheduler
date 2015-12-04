@@ -21,12 +21,11 @@ public class DeepSearchCore {
 	
 	private void generateDeepSearch(StudCollection studCol, int poolSize, TimeTable initTable, TimeTable outputTable, boolean ignoreHappiness, LocalBeamSearchCorePool LBSCP, boolean op){
 		List<DeepSearchThread> threads = new ArrayList<DeepSearchThread>();
-		List<TimeTable> resultTableSet = new LinkedList<TimeTable>();
-		List<StudCollection> resultStudSet = new LinkedList<StudCollection>();
+		LockableResultSet LRS = new LockableResultSet(new ReentrantLock());
 		LockableCounter lockC = new LockableCounter(new ReentrantLock());
 		
 		for(int i = 0; i < poolSize; i++){
-			threads.add(new DeepSearchThread(studCol, initTable, lockC, ignoreHappiness, poolSize, resultTableSet, resultStudSet));
+			threads.add(new DeepSearchThread(studCol, initTable, lockC, ignoreHappiness, poolSize, LRS));
 		}
 		
 		for(DeepSearchThread dst : threads){
@@ -42,10 +41,10 @@ public class DeepSearchCore {
 		}
 //		System.out.println("DEBUG");
 		if(ignoreHappiness){
-			outputTable.setAllCourses(resultTableSet.get(0).getAllCourses());
-			studCol.setAllLists(resultStudSet.get(0).getAllStuds(), resultStudSet.get(0).getThreeCourseStuds(), resultStudSet.get(0).getTwoCourseStuds(), resultStudSet.get(0).getLazyStuds());
+			outputTable.setAllCourses(LRS.getResultTable(0).getAllCourses());
+			studCol.setAllLists(LRS.getResultStudCol(0).getAllStuds(), LRS.getResultStudCol(0).getThreeCourseStuds(), LRS.getResultStudCol(0).getTwoCourseStuds(), LRS.getResultStudCol(0).getLazyStuds());
 		}else{
-			LBSCP.generateBeamSearchCores(outputTable, studCol, resultTableSet, resultStudSet, op);
+			LBSCP.generateBeamSearchCores(outputTable, studCol, LRS, op);
 		}
 		
 	}

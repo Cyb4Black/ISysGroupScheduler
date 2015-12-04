@@ -14,19 +14,17 @@ public class DeepSearchThread extends Thread {
 	private int stopCount;
 	LockableCounter finishCount;
 	boolean ignoreHappiness;
-	List<TimeTable> resultTableSet;
-	List<StudCollection> resultStudSet;
+	LockableResultSet results;
 
 	public DeepSearchThread(StudCollection SC, TimeTable rT,
 			LockableCounter lockC, boolean iH, int poolSize,
-			List<TimeTable> rTS, List<StudCollection> rSS) {
+			LockableResultSet LRS) {
 		initialTable = rT;
 
 		tempCollection = SC;
 		finishCount = lockC;
 		ignoreHappiness = iH;
-		resultTableSet = rTS;
-		resultStudSet = rSS;
+		results = LRS;
 
 		if (iH) {
 			stopCount = 1;
@@ -56,8 +54,7 @@ public class DeepSearchThread extends Thread {
 
 		if (finishCount.pp() >= stopCount)
 			return;
-		resultTableSet.add(myResultTable);
-		resultStudSet.add(myTempCollection);
+		results.addResults(myResultTable, myTempCollection);
 
 	}
 

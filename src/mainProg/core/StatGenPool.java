@@ -10,9 +10,9 @@ public class StatGenPool implements Runnable{
 	private int cycles;
 	private boolean overPower;
 	LockableProgressCounter progCount;
-	LinkedList<StatGenResult> results;
+	LockableStatGenResultList results;
 
-	public StatGenPool(int cyc, boolean op, LinkedList<StatGenResult> r, LockableProgressCounter pc) {
+	public StatGenPool(int cyc, boolean op, LockableStatGenResultList r, LockableProgressCounter pc) {
 		this.cycles = cyc;
 		this.overPower = op;
 		this.progCount = pc;

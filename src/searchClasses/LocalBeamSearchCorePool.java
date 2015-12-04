@@ -3,23 +3,23 @@ package searchClasses;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
+
 import simuClasses.StudCollection;
 import simuClasses.TimeTable;
 
 public class LocalBeamSearchCorePool {
 
 	public void generateBeamSearchCores(TimeTable outputTable,
-			StudCollection studCol, List<TimeTable> initialTableSet,
-			List<StudCollection> initialStudSet, boolean op) {
+			StudCollection studCol, LockableResultSet LRS, boolean op) {
 		List<LocalBeamSearchCore> threads = new ArrayList<LocalBeamSearchCore>();
-		List<TimeTable> resultTableSet = new LinkedList<TimeTable>();
-		List<StudCollection> resultStudSet = new LinkedList<StudCollection>();
+		LockableResultSet results = new LockableResultSet(new ReentrantLock());
 
-		sortTablesByHappiness(initialTableSet, initialStudSet);
+		LRS.sortTablesByHappiness();
 
 		for (int i = 0; i < 4; i++) {
-			threads.add(new LocalBeamSearchCore(initialStudSet.get(i),
-					initialTableSet.get(i), resultTableSet, resultStudSet, op));
+			threads.add(new LocalBeamSearchCore(LRS.getResultStudCol(i),
+					LRS.getResultTable(i), results, op));
 		}
 
 		for (LocalBeamSearchCore LBSC : threads) {
@@ -34,29 +34,10 @@ public class LocalBeamSearchCorePool {
 			}
 		}
 
-		sortTablesByHappiness(resultTableSet, resultStudSet);
-		outputTable.setAllCourses(resultTableSet.get(0).getAllCourses());
-		studCol.setAllLists(resultStudSet.get(0).getAllStuds(), resultStudSet
-				.get(0).getThreeCourseStuds(), resultStudSet.get(0)
-				.getTwoCourseStuds(), resultStudSet.get(0).getLazyStuds());
-	}
-
-	private void sortTablesByHappiness(List<TimeTable> initialTableSet,
-			List<StudCollection> initialStudSet) {
-		for (int i = 0; i < initialTableSet.size(); i++) {
-			for (int j = i + 1; j < initialTableSet.size(); j++) {
-				if (initialTableSet.get(i).getHappiness() < initialTableSet
-						.get(j).getHappiness()) {
-					TimeTable dummy1 = initialTableSet.get(i);
-					initialTableSet.set(i, initialTableSet.get(j));
-					initialTableSet.set(j, dummy1);
-
-					StudCollection dummy2 = initialStudSet.get(i);
-					initialStudSet.set(i, initialStudSet.get(j));
-					initialStudSet.set(j, dummy2);
-				}
-			}
-		}
+		results.sortTablesByHappiness();
+		outputTable.setAllCourses(LRS.getResultTable(0).getAllCourses());
+		studCol.setAllLists(LRS.getResultStudCol(0).getAllStuds(), LRS.getResultStudCol(0).getThreeCourseStuds(), LRS.getResultStudCol(0)
+				.getTwoCourseStuds(), LRS.getResultStudCol(0).getLazyStuds());
 	}
 
 }
