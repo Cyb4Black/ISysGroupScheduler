@@ -138,13 +138,22 @@ public class LocalBeamSearchThread extends Thread {
 
 		for (Student stud1 : CS1.getStudents()) {
 
+			
+			
+			
 			for (Student stud2 : CS2.getStudents()) {
-				if ((getTheoryHappiness(CS1, stud1, stud1)
-						+ getTheoryHappiness(CS2, stud2, stud2) < getTheoryHappiness(
-						CS1, stud2, stud1)
-						+ getTheoryHappiness(CS2, stud1, stud2))
-						&& stud1.gotTime(CS2.getTimeSlot())
-						&& stud2.gotTime(CS1.getTimeSlot())) {
+				
+				if((!CS2.isFilled()) && (  (getTheoryHappiness(CS1,stud1) + getTheoryHappiness(CS2, stud1))  >   (CS1.getHappiness() + CS2.getHappiness())  ) && stud2.gotTime(CS1.getTimeSlot()) ){
+					return moveStud(CS1, stud1, CS2);
+				}
+				
+				if((!CS1.isFilled()) && (  (getTheoryHappiness(CS1,stud2) + getTheoryHappiness(CS2, stud2))  >   (CS1.getHappiness() + CS2.getHappiness())  ) && stud1.gotTime(CS2.getTimeSlot()) ){
+					return moveStud(CS2, stud2, CS1);
+				}
+					
+					
+					
+				if ((getTheoryHappiness(CS1, stud1, stud1) + getTheoryHappiness(CS2, stud2, stud2) < getTheoryHappiness(CS1, stud2, stud1)+ getTheoryHappiness(CS2, stud1, stud2)) && stud1.gotTime(CS2.getTimeSlot()) && stud2.gotTime(CS1.getTimeSlot())) {
 
 					return swapStud(CS1, stud1, CS2, stud2);
 				}
@@ -154,6 +163,8 @@ public class LocalBeamSearchThread extends Thread {
 
 		return false;
 	}
+
+
 
 	/**
 	 * Eine Hilfsmethode welche die jeweiligen Unglï¿½cklichsten Studenten von
@@ -292,6 +303,65 @@ public class LocalBeamSearchThread extends Thread {
 		}
 
 		return TheoryHappiness;
+
+	}
+	
+	/**
+	 * Eine Hilfsmethode welche die theoretischen neuen Glueckswerte fuer eine
+	 * Gruppe ausrechnet, falls der Student der Gruppe hinzugefügt wird oder aus ihr entfernt
+	 * 
+	 * @param CS der betreffende Praktikumstermin
+	 * @param stud1 der betreffende Student
+	 * 
+	 * @return die summe der Glueckswerte
+	 */
+	private double getTheoryHappiness(CourseSlot CS, Student stud1) {
+		HappinessList HL = CS.getHappyMatrix();
+		double TheoryHappiness = 0;
+		if(CS.getStudents().contains(stud1)){
+			for (int i = 0; i < CS.getStudents().size(); i++) {
+				for(int j=i+1; j < CS.getStudents().size(); j++){
+					if(CS.getStudents().get(i).getID()!=stud1.getID() && CS.getStudents().get(j).getID()!=stud1.getID()){
+						
+						TheoryHappiness += HL.getHpById(CS.getStudents().get(i).getID(), CS.getStudents().get(j).getID()).getHappiness();
+					
+					} 
+				}
+			}
+			return TheoryHappiness;
+		}else{
+			for (Student stud2 : CS.getStudents()) {
+				TheoryHappiness += HL.getHpById(stud1.getID(), stud2.getID()).getHappiness();
+			}
+
+			return TheoryHappiness+CS.getHappiness();
+		}
+		
+
+	}
+	
+	/**
+	 * Eine Hilfsmethode welche einen Studenten von einen Praktikumstermin in einen anderen Praktikumstermin verschiebt
+	 * 
+	 * @param CS1
+	 *            Der erste Praktikumstermin
+	 * @param stud1
+	 *            Der zu verschiebene Student
+	 * @param CS2
+	 *            Der zweite Praktikumstermin
+	 * @return true wenn getauscht wurde, false wenn nicht
+	 */
+	private boolean moveStud(CourseSlot CS1, Student stud1, CourseSlot CS2) {
+		if (stud1 == null) {
+			return false;
+		}
+		CS1.removeStudent(stud1);
+		stud1.getMySlots().remove(CS1);
+
+		CS2.addStudent(stud1);
+		stud1.getMySlots().add(CS2);
+
+		return true;
 
 	}
 }
