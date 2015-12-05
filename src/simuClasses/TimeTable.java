@@ -11,6 +11,10 @@ import java.util.List;
  */
 public class TimeTable {
 	private List<CourseSlot> allCourses = new LinkedList<CourseSlot>();
+	private StudCollection MyStuds = new StudCollection();
+	private int Swaps,Moves;
+	private double InitialHappiness, EndHappiness;
+	
 	
 	public TimeTable(){
 		//stays empty
@@ -60,5 +64,53 @@ public class TimeTable {
 			ret += cs.getHappiness();
 		}
 		return ret;
+	}
+
+	public StudCollection getMyStuds() {
+		return MyStuds;
+	}
+
+	public void setMyStuds(StudCollection myStuds) {
+		MyStuds = myStuds;
+	}
+
+	public int getSwaps() {
+		return Swaps;
+	}
+
+	public void setSwaps(int swaps) {
+		Swaps = swaps;
+	}
+	
+	public void incSwaps(){
+		Swaps ++;
+	}
+
+	public int getMoves() {
+		return Moves;
+	}
+
+	public void setMoves(int moves) {
+		Moves = moves;
+	}
+
+	public void incMoves(){
+		Moves ++;
+	}
+	
+	public double getInitialHappiness() {
+		return InitialHappiness;
+	}
+
+	public void setInitialHappiness(double initialHappiness) {
+		InitialHappiness = initialHappiness;
+	}
+
+	public double getEndHappiness() {
+		return EndHappiness;
+	}
+
+	public void setEndHappiness(double endHappiness) {
+		EndHappiness = endHappiness;
 	}
 }

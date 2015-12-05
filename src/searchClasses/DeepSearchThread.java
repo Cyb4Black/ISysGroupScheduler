@@ -54,7 +54,7 @@ public class DeepSearchThread extends Thread {
 
 		if (finishCount.pp() >= stopCount)
 			return;
-		results.addResults(myResultTable, myTempCollection);
+		results.addResult(myResultTable);
 
 	}
 
