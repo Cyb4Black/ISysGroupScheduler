@@ -35,9 +35,9 @@ public class LocalBeamSearchCorePool {
 		}
 
 		results.sortTablesByHappiness();
-		outputTable.setAllCourses(LRS.getResultTable(0).getAllCourses());
-		studCol.setAllLists(LRS.getResultStudCol(0).getAllStuds(), LRS.getResultStudCol(0).getThreeCourseStuds(), LRS.getResultStudCol(0)
-				.getTwoCourseStuds(), LRS.getResultStudCol(0).getLazyStuds());
+		outputTable.setAllCourses(results.getResultTable(0).getAllCourses());
+		studCol.setAllLists(results.getResultStudCol(0).getAllStuds(), results.getResultStudCol(0).getThreeCourseStuds(), results.getResultStudCol(0)
+				.getTwoCourseStuds(), results.getResultStudCol(0).getLazyStuds());
 	}
 
 }
