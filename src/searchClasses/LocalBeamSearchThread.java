@@ -31,7 +31,7 @@ public class LocalBeamSearchThread extends Thread {
 		List<CourseSlot> tempSlots1 = new LinkedList<CourseSlot>();
 		List<CourseSlot> tempSlots2 = new LinkedList<CourseSlot>();
 		Random myRand = new Random();
-		int swaps = 0;
+		int swaps = 0, cycles = 0;
 		do{
 			myResultTable.setSwaps(swaps);
 		if (!overPower) {
@@ -105,6 +105,8 @@ public class LocalBeamSearchThread extends Thread {
 				// + allCourseSlots.size() + "fertig.");
 			}
 		}
+		cycles++;
+		myResultTable.setCycles(cycles);
 		}while(swaps > myResultTable.getSwaps());
 		results.addResults(myResultTable, myTempCollection);
 
@@ -312,7 +314,7 @@ public class LocalBeamSearchThread extends Thread {
 	
 	/**
 	 * Eine Hilfsmethode welche die theoretischen neuen Glueckswerte fuer eine
-	 * Gruppe ausrechnet, falls der Student der Gruppe hinzugefügt wird oder aus ihr entfernt
+	 * Gruppe ausrechnet, falls der Student der Gruppe hinzugefï¿½gt wird oder aus ihr entfernt
 	 * 
 	 * @param CS der betreffende Praktikumstermin
 	 * @param stud1 der betreffende Student

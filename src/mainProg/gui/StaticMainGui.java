@@ -208,7 +208,7 @@ public class StaticMainGui extends AbstractMain {
 				.setToolTipText("Every cycle runs the search with and without happiness vor all 6 overlaps.\r\nSo 10 cycles give 120 searches, where 60 use only deep-search and 60 the power of local search.");
 		chooseStressLevel.setBounds(396, 189, 55, 23);
 		chooseStressLevel.setMinimum(0);
-		chooseStressLevel.setMaximum(1000);
+		chooseStressLevel.setMaximum(100);
 		chooseStressLevel.setIncrement(5);
 
 		lblStressCycles = new Label(shell, SWT.NONE);

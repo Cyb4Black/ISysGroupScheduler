@@ -36,6 +36,8 @@ public class LocalBeamSearchCorePool {
 
 		results.sortTablesByHappiness();
 		outputTable.setAllCourses(results.getResultTable(0).getAllCourses());
+		outputTable.setCycles(results.getResultTable(0).getCycles());
+		outputTable.setSwaps(results.getResultTable(0).getSwaps());
 		studCol.setAllLists(results.getResultStudCol(0).getAllStuds(), results.getResultStudCol(0).getThreeCourseStuds(), results.getResultStudCol(0)
 				.getTwoCourseStuds(), results.getResultStudCol(0).getLazyStuds());
 	}

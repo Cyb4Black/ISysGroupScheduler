@@ -34,6 +34,8 @@ public class StatGenThread extends AbstractMain implements Runnable {
 			this.startSearch(false, overPower);
 			this.result.addOptHappiness(this.finalTable.getHappiness());
 			this.result.addAverageOpt(calcAverageStudHappiness());
+			this.result.addAllCycles(this.finalTable.getCycles());
+			this.result.addAllSwaps(this.finalTable.getSwaps());
 //			System.out.println("My OL:" + this.myOverlap + " My Happ: " + calcAverageStudHappiness());
 			progCount.pp();
 			// ---------------------------------------------------------------

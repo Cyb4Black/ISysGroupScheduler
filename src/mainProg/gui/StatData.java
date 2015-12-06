@@ -40,14 +40,14 @@ public class StatData{
 
 	public void createContents() {
 		shell = new Shell();
-		shell.setSize(560, 240);
+		shell.setSize(560, 260);
 		shell.setLayout(new FillLayout());
 		shell.setText("Satistical Data View");
 
 		Table table = new Table(shell, SWT.BORDER | SWT.V_SCROLL);
 		table.setHeaderVisible(true);
 		String[] categories = {"worst Random", "best Random",
-				"Random middle", "AverageRandom/Student", "worst Optimum", "best Optimum", "Optimum middle", "AverageOpt/Student"};
+				"Random middle", "AverageRandom/Student", "worst Optimum", "best Optimum", "Optimum middle", "AverageOpt/Student", "Average Swaps", "Average Cycles"};
 		String[] titles = {"Category", "Lvl. 0", "Lvl. 1", "Lvl. 2", "Lvl. 3", "Lvl. 4", "Lvl. 5"};
 
 		for (int i = 0; i < titles.length; i++) {
@@ -72,6 +72,8 @@ public class StatData{
 			table.getItem(5).setText(col, String.format("%.6g%n", result.getBestOptHappiness()));
 			table.getItem(6).setText(col, String.format("%.6g%n", (result.getAllOptHappiness() / cycles)));
 			table.getItem(7).setText(col, String.format("%.4g%n", (result.getAverageOpt() / cycles)));
+			table.getItem(8).setText(col, String.format("%.3g%n", (result.getAllSwaps() / cycles)));
+			table.getItem(9).setText(col, String.format("%.3g%n", (result.getAllCycles() / cycles)));
 		}
 //		for(StatGenResult result : results){
 //			TableItem item = new TableItem(table, SWT.NULL);

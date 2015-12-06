@@ -2,9 +2,26 @@ package mainProg.core;
 
 public class StatGenResult {
 	private int id;
+	private double allCycles = 0, allSwaps = 0;
 	private double bestRandomHappiness = 0, allRandomHappiness = 0, averageRandHappiness = 0;
 	private double bestOptHappiness = 0, allOptHappiness = 0, averageOptHappiness = 0;
 	private double worstRandomHappiness = 99999, worstOptHappiness = 99999;
+	public double getAllSwaps() {
+		return allSwaps;
+	}
+
+	public void addAllSwaps(int allSwaps) {
+		this.allSwaps += allSwaps;
+	}
+
+	public double getAllCycles() {
+		return allCycles;
+	}
+
+	public void addAllCycles(int allCycles) {
+		this.allCycles += allCycles;
+	}
+
 	public StatGenResult(int ID) {
 		this.id = ID;
 	}
