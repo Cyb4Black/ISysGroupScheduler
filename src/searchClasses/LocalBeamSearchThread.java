@@ -11,6 +11,7 @@ public class LocalBeamSearchThread extends Thread {
 	private TimeTable MyTimeTable;
 	private boolean overPower;
 	private LockableResultSet results;
+	private int swaps;
 
 	public LocalBeamSearchThread(StudCollection SC, TimeTable TT,
 			LockableResultSet LRS, boolean op) {
@@ -31,6 +32,9 @@ public class LocalBeamSearchThread extends Thread {
 		List<CourseSlot> tempSlots1 = new LinkedList<CourseSlot>();
 		List<CourseSlot> tempSlots2 = new LinkedList<CourseSlot>();
 		Random myRand = new Random();
+		swaps = 0;
+		do{
+			myResultTable.setSwaps(swaps);
 		if (!overPower) {
 			// for (CourseSlot CS1 : allCourseSlots) {
 			tempSlots1.addAll(allCourseSlots);
@@ -51,7 +55,7 @@ public class LocalBeamSearchThread extends Thread {
 						do {
 
 							swap = swapLeastHappyStud(CS1, CS2);
-
+							if(swap)swaps++;
 						} while (swap);
 
 					}
@@ -87,7 +91,7 @@ public class LocalBeamSearchThread extends Thread {
 						do {
 
 							swap = swapEveryStud(CS1, CS2);
-
+							if(swap)swaps++;
 						} while (swap);
 
 					}
@@ -102,6 +106,7 @@ public class LocalBeamSearchThread extends Thread {
 				// + allCourseSlots.size() + "fertig.");
 			}
 		}
+		}while(swaps > myResultTable.getSwaps());
 		results.addResults(myResultTable, myTempCollection);
 
 	}

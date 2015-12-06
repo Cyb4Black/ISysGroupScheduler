@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class TimeTable {
 	private List<CourseSlot> allCourses = new LinkedList<CourseSlot>();
+	private int swaps;
 	
 	public TimeTable(){
 		//stays empty
@@ -38,6 +39,7 @@ public class TimeTable {
 		for(CourseSlot cs : this.allCourses){
 			retList.add(new CourseSlot(cs.getCourse(), cs.getTimeSlot(),cs.getMax(), cs.getHappyMatrix()));
 		}
+		ret.setSwaps(swaps);
 		ret.allCourses = retList;
 		return ret;
 	}
@@ -60,5 +62,13 @@ public class TimeTable {
 			ret += cs.getHappiness();
 		}
 		return ret;
+	}
+
+	public int getSwaps() {
+		return swaps;
+	}
+
+	public void setSwaps(int swaps) {
+		this.swaps = swaps;
 	}
 }
