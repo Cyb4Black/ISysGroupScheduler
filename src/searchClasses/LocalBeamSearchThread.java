@@ -11,7 +11,6 @@ public class LocalBeamSearchThread extends Thread {
 	private TimeTable MyTimeTable;
 	private boolean overPower;
 	private LockableResultSet results;
-	private int swaps;
 
 	public LocalBeamSearchThread(StudCollection SC, TimeTable TT,
 			LockableResultSet LRS, boolean op) {
@@ -32,7 +31,7 @@ public class LocalBeamSearchThread extends Thread {
 		List<CourseSlot> tempSlots1 = new LinkedList<CourseSlot>();
 		List<CourseSlot> tempSlots2 = new LinkedList<CourseSlot>();
 		Random myRand = new Random();
-		swaps = 0;
+		int swaps = 0;
 		do{
 			myResultTable.setSwaps(swaps);
 		if (!overPower) {
