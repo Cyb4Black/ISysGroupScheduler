@@ -11,10 +11,10 @@ public class LocalBeamSearchThread extends Thread {
 	private TimeTable MyTimeTable;
 	private boolean overPower;
 	private LockableResultSet results;
-	private int swaps;
 
-	public LocalBeamSearchThread(TimeTable TT, LockableResultSet LRS, boolean op) {
-		this.MyStuds = TT.getMyStuds();
+	public LocalBeamSearchThread(StudCollection SC, TimeTable TT,
+			LockableResultSet LRS, boolean op) {
+		this.MyStuds = SC;
 		this.MyTimeTable = TT;
 		this.results = LRS;
 		this.overPower = op;
@@ -31,9 +31,6 @@ public class LocalBeamSearchThread extends Thread {
 		List<CourseSlot> tempSlots1 = new LinkedList<CourseSlot>();
 		List<CourseSlot> tempSlots2 = new LinkedList<CourseSlot>();
 		Random myRand = new Random();
-		do{
-			swaps = myResultTable.getSwaps();
-		
 		if (!overPower) {
 			// for (CourseSlot CS1 : allCourseSlots) {
 			tempSlots1.addAll(allCourseSlots);
@@ -54,7 +51,7 @@ public class LocalBeamSearchThread extends Thread {
 						do {
 
 							swap = swapLeastHappyStud(CS1, CS2);
-							
+
 						} while (swap);
 
 					}
@@ -105,8 +102,7 @@ public class LocalBeamSearchThread extends Thread {
 				// + allCourseSlots.size() + "fertig.");
 			}
 		}
-		}while(myResultTable.getSwaps()> swaps);
-		results.addResult(myResultTable);
+		results.addResults(myResultTable, myTempCollection);
 
 	}
 
@@ -148,19 +144,17 @@ public class LocalBeamSearchThread extends Thread {
 			for (Student stud2 : CS2.getStudents()) {
 				
 				if((!CS2.isFilled()) && (  (getTheoryHappiness(CS1,stud1) + getTheoryHappiness(CS2, stud1))  >   (CS1.getHappiness() + CS2.getHappiness())  ) && stud2.gotTime(CS1.getTimeSlot()) ){
-					this.swaps++;
 					return moveStud(CS1, stud1, CS2);
 				}
 				
 				if((!CS1.isFilled()) && (  (getTheoryHappiness(CS1,stud2) + getTheoryHappiness(CS2, stud2))  >   (CS1.getHappiness() + CS2.getHappiness())  ) && stud1.gotTime(CS2.getTimeSlot()) ){
-					this.swaps++;
 					return moveStud(CS2, stud2, CS1);
 				}
 					
 					
 					
 				if ((getTheoryHappiness(CS1, stud1, stud1) + getTheoryHappiness(CS2, stud2, stud2) < getTheoryHappiness(CS1, stud2, stud1)+ getTheoryHappiness(CS2, stud1, stud2)) && stud1.gotTime(CS2.getTimeSlot()) && stud2.gotTime(CS1.getTimeSlot())) {
-					this.swaps++;
+
 					return swapStud(CS1, stud1, CS2, stud2);
 				}
 			}
@@ -191,7 +185,7 @@ public class LocalBeamSearchThread extends Thread {
 				+ getTheoryHappiness(CS2, LeastHappyStud2, LeastHappyStud2) < getTheoryHappiness(
 				CS1, LeastHappyStud2, LeastHappyStud1)
 				+ getTheoryHappiness(CS2, LeastHappyStud1, LeastHappyStud2)) {
-			this.swaps++;
+
 			return swapStud(CS1, LeastHappyStud1, CS2, LeastHappyStud2);
 		}
 

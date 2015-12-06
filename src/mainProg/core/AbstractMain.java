@@ -40,13 +40,12 @@ public abstract class AbstractMain {
 		generateCourses();
 		generateStudents();
 		createInitialTable();
-		initialTable.setMyStuds(studsToManage);
 	}
 	
 	public void startSearch(boolean ignoreHappiness, boolean overPower){
 		DeepSearchCore DSC = new DeepSearchCore();
 		LocalBeamSearchCorePool LBSCP = new LocalBeamSearchCorePool();
-		DSC.generateDeepSearch(ignoreHappiness, initialTable, finalTable, LBSCP, overPower);
+		DSC.generateDeepSearch(studsToManage, ignoreHappiness, initialTable, finalTable, LBSCP, overPower);
 	}
 	
 	private void createInitialTable(){

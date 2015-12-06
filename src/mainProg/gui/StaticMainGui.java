@@ -277,7 +277,7 @@ public class StaticMainGui extends AbstractMain {
 	}
 
 	private void showStats() {
-		StatView STV = new StatView(this.getFinalTable(), this.getFinalTable().getMyStuds(),
+		StatView STV = new StatView(this.getFinalTable(), this.getStudCol(),
 				this.getCourses());
 		STV.open();
 	}
