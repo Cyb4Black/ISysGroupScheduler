@@ -28,6 +28,7 @@ public abstract class AbstractMain {
 	
 //--------------------------------------------------------
 	
+	//Initialisierung
 	public void init(int ol){
 		OVERLAP = ol;
 		COURSES = new LinkedList<Course>();
@@ -48,6 +49,9 @@ public abstract class AbstractMain {
 		DSC.generateDeepSearch(studsToManage, ignoreHappiness, initialTable, finalTable, LBSCP, overPower);
 	}
 	
+	/**
+	 * Eine Methode, welche einen Stundenplan erzeugt.
+	 */
 	private void createInitialTable(){
 		for(Course c : COURSES){
 			if(initialTable.getAllCourses().isEmpty()){
@@ -73,7 +77,10 @@ public abstract class AbstractMain {
 	public TimeTable getFinalTable(){
 		return finalTable;
 	}
-	
+	/**
+	 * Eine Methode, welche Praktikumstermine für einen Kurs erzeugt und sie zu dem Stundenplan hinzufügt.
+	 * @param c Der Kurs für den Praktikumstermine erzeugt werden sollen
+	 */
 	private void createInitialTable(Course c){
 		int slotCount = (c.getStudents().size() / MAXSTUDSPERCOURSESLOT) + ((c.getStudents().size() % MAXSTUDSPERCOURSESLOT == 0) ? 0 : 1);
 		
@@ -111,7 +118,10 @@ public abstract class AbstractMain {
 		}
 		initialTable.addAllCourseSlots(c.getMySlots());
 	}
-	
+	/**
+	 * Eine Methode, welche Praktikumstermine für einen Kurs erzeugt und sie zu dem Stundenplan hinzufügt.
+	 * @param c Der Kurs für den Praktikumstermine erzeugt werden sollen
+	 */
 	private void initializeInitialTable(Course c){
 		initialTable = new TimeTable();
 		int slotCount = (c.getStudents().size() / MAXSTUDSPERCOURSESLOT) + ((c.getStudents().size() % MAXSTUDSPERCOURSESLOT == 0) ? 0 : 1);
@@ -129,13 +139,18 @@ public abstract class AbstractMain {
 		initialTable.addAllCourseSlots(c.getMySlots());
 	}
 	
+	/**
+	 * Eine Methode, welche die Kurse erzeugt
+	 */
 	private void generateCourses(){
 		for(int i = 0; i < courseNames.length; i++){
 			COURSES.add(new Course(courseNames[i]));
 			COURSES.get(i).setChance(courseChances[i]);
 		}
 	}
-	
+	/**
+	 * Eine Methode, welche die Studenten erzeugt
+	 */
 	private void generateStudents(){
 				
 		for(int i = 0; i < STUDENTS; i++){

@@ -6,76 +6,87 @@ import java.util.Random;
 
 import simuClasses.*;
 
+/**
+ * Ein Klasse für Threads, die eine lokale BeamSearch durchführen.
+ * @author Willnow & Selle
+ *
+ */
 public class LocalBeamSearchThread extends Thread {
 	private StudCollection MyStuds;
 	private TimeTable MyTimeTable;
 	private boolean overPower;
 	private LockableResultSet results;
-
-	public LocalBeamSearchThread(StudCollection SC, TimeTable TT,
-			LockableResultSet LRS, boolean op) {
+	
+	/**
+	 * Der Konstruktor für die LocalBeamSearchThreads.
+	 * @param SC die Studcollection mit der gearbeitet wird.
+	 * @param TT der Stundenplan auf dem gearbeitet wird.
+	 * @param LRS die Ergebnisspeicherung.
+	 * @param op die Flag nach welcher Art gesucht wird.
+	 */
+	public LocalBeamSearchThread(StudCollection SC, TimeTable TT, LockableResultSet LRS, boolean op) {
 		this.MyStuds = SC;
 		this.MyTimeTable = TT;
 		this.results = LRS;
 		this.overPower = op;
 	}
-
+	
 	public void run() {
 		boolean swap;
+		
+		//Jeder Thread klont sich seinen eigenen Stundenplan und Studcollection 
 		TimeTable myResultTable = MyTimeTable.clone();
 		StudCollection myTempCollection = MyStuds.clone();
 
 		threadSafeClone(myResultTable, myTempCollection);
-
+		
+		//Erzeugung der Objekte für eine zufällige reihenfolge
 		List<CourseSlot> allCourseSlots = myResultTable.getAllCourses();
 		List<CourseSlot> tempSlots1 = new LinkedList<CourseSlot>();
 		List<CourseSlot> tempSlots2 = new LinkedList<CourseSlot>();
 		Random myRand = new Random();
+		
+		//Initialisierung für Zählervariablen
 		int swaps = 0, cycles = 0;
+		
 		do{
+			//Anzahl der Vertauschungen wird in den Stundenplan geschrieben
 			myResultTable.setSwaps(swaps);
+		
+		//zufällige informierte LocalBeamSearch
 		if (!overPower) {
-			// for (CourseSlot CS1 : allCourseSlots) {
+			// for (CourseSlot CS1 : allCourseSlots) 
 			tempSlots1.addAll(allCourseSlots);
 			while (!(tempSlots1.isEmpty())) {
-				CourseSlot CS1 = tempSlots1.get(myRand.nextInt(tempSlots1
-						.size()));
-
-				// for (CourseSlot CS2 : allCourseSlots) {
+				
+				CourseSlot CS1 = tempSlots1.get(myRand.nextInt(tempSlots1.size()));
+				// for (CourseSlot CS2 : allCourseSlots) 
 				tempSlots2.addAll(allCourseSlots);
 				while (!(tempSlots2.isEmpty())) {
-					CourseSlot CS2 = tempSlots2.get(myRand.nextInt(tempSlots2
-							.size()));
+					CourseSlot CS2 = tempSlots2.get(myRand.nextInt(tempSlots2.size()));
 
 					// Fall CS1 und CS2 haben den selben Kurs sind aber nicht
 					// der
 					// selbe Praktikumstermin
 					if (CS1.getCourse() == CS2.getCourse() && CS1 != CS2) {
 						do {
-
 							swap = swapLeastHappyStud(CS1, CS2);
 							if(swap)swaps++;
 						} while (swap);
-
 					}
 					tempSlots2.remove(CS2);
-					// System.out.println(this.getId() + ": TS2 "
-					// + (allCourseSlots.size() - tempSlots2.size()) + " von "
-					// + allCourseSlots.size() + "fertig.");
 				}
 				tempSlots1.remove(CS1);
-				// System.out.println(this.getId() + ": TS1 "
-				// + (allCourseSlots.size() - tempSlots1.size()) + " von "
-				// + allCourseSlots.size() + "fertig.");
+
 			}
 		}
 
-		// for (CourseSlot CS1 : allCourseSlots) {
+		// zufällige uninformierte LocalBeamSearch
 		if (overPower) {// only use this part for REALLY optimized search!
+			// for (CourseSlot CS1 : allCourseSlots) {
 			tempSlots1.addAll(allCourseSlots);
 			while (!(tempSlots1.isEmpty())) {
-				CourseSlot CS1 = tempSlots1.get(myRand.nextInt(tempSlots1
-						.size()));
+				CourseSlot CS1 = tempSlots1.get(myRand.nextInt(tempSlots1.size()));
 
 				// for (CourseSlot CS2 : allCourseSlots) {
 				tempSlots2.addAll(allCourseSlots);
@@ -95,28 +106,23 @@ public class LocalBeamSearchThread extends Thread {
 
 					}
 					tempSlots2.remove(CS2);
-					// System.out.println(this.getId() + ": TS2 "
-					// + (allCourseSlots.size() - tempSlots2.size()) + " von "
-					// + allCourseSlots.size() + "fertig.");
 				}
 				tempSlots1.remove(CS1);
-				// System.out.println(this.getId() + ": TS1 "
-				// + (allCourseSlots.size() - tempSlots1.size()) + " von "
-				// + allCourseSlots.size() + "fertig.");
 			}
 		}
 		cycles++;
 		myResultTable.setCycles(cycles);
+		//Schleife wird verlassen, wenn es keine neuen Vertauschungen gab
 		}while(swaps > myResultTable.getSwaps());
+		//Ergebnis wird geschrieben
 		results.addResults(myResultTable, myTempCollection);
 
 	}
 
-	private void threadSafeClone(TimeTable myResultTable,
-			StudCollection myTempCollection) {
+	
+	private void threadSafeClone(TimeTable myResultTable,StudCollection myTempCollection) {
 		for (CourseSlot cs : MyTimeTable.getAllCourses()) {
-			CourseSlot csCloned = myResultTable.getAllCourses().get(
-					MyTimeTable.getAllCourses().indexOf(cs));
+			CourseSlot csCloned = myResultTable.getAllCourses().get(MyTimeTable.getAllCourses().indexOf(cs));
 			for (Student s : cs.getStudents()) {
 				for (Student sCloned : myTempCollection.getAllStuds()) {
 					if (s.getID() == sCloned.getID()) {

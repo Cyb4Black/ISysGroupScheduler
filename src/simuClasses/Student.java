@@ -14,7 +14,6 @@ public class Student {
 	private int ID;
 	private List<Course> Courses = new LinkedList<Course>();
 	private List<CourseSlot> MySlots = new LinkedList<CourseSlot>();
-	private List<HappinessPairing> myPairings = new LinkedList<HappinessPairing>();
 	
 	public Student(int id){
 		this.ID = id;

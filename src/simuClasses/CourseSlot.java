@@ -16,7 +16,6 @@ public class CourseSlot {
 	private int maxStuds;
 	private List<Student> myStuds = new LinkedList<Student>();
 	private HappinessList GlobalHappinessList;
-	//private List<StudentPair> myPairs;
 	
 	public CourseSlot(Course c, int slotNo, int max, HappinessList HL){
 		this.myCourse = c;

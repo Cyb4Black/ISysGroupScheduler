@@ -3,10 +3,14 @@ package searchClasses;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.locks.*;
-
 import simuClasses.StudCollection;
 import simuClasses.TimeTable;
 
+/**
+ * Eine Klasse in der die Ergebnisse der Threads gespeichert werden. Eingeführt für ThreadSafety
+ * 
+ * @author Willnow & Selle
+ */
 public class LockableResultSet {
 	private Lock l;
 	private List<TimeTable> resultTableSet = new LinkedList<TimeTable>();
@@ -35,7 +39,11 @@ public class LockableResultSet {
 			l.unlock();
 		}
 	}
-	
+	/**
+	 * Eine Methode, welche einen Stundenplan und eine Menge von Studenten den Ergebnissen hinzufügt.
+	 * @param inTable der Stundenplan
+	 * @param inCol die Menge von Studenten
+	 */
 	public void addResults(TimeTable inTable, StudCollection inCol){
 		l.lock();
 		try{
@@ -47,6 +55,9 @@ public class LockableResultSet {
 		}
 	}
 	
+	/**
+	 * Eine Methode, welche die Ergebnisse nach Glückswerten sortiert.
+	 */
 	public void sortTablesByHappiness() {
 		for (int i = 0; i < resultTableSet.size(); i++) {
 			for (int j = i + 1; j < resultTableSet.size(); j++) {

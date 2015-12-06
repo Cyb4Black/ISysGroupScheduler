@@ -4,13 +4,21 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Eine Klasse, welche einen Stundenplan simuliert
+ * Eine Klasse, welche einen Stundenplan simuliert.
+ * Ein Stundenplan enthält seine Praktikumstermine, wie oft auf ihm getauscht wurde in wievielen Durchläufen.
  * 
  * @author Willnow & Selle
  *
  */
 public class TimeTable {
+	/**
+	 * Alle Praktikumstermine die der Stundenplan enthält.
+	 */
 	private List<CourseSlot> allCourses = new LinkedList<CourseSlot>();
+
+	/**
+	 * wie oft wurde auf diesem Stundenplan getauscht in wievielen Durchläufen.
+	 */
 	private int swaps, cycles;
 	
 	public TimeTable(){
@@ -56,7 +64,11 @@ public class TimeTable {
 //		ret.allCourses = retList;
 //		return ret;
 //	}
-	
+
+	/**
+	 * Eine Hilfsmethode, welche den Glückswert für den Stundenplan berechnet.
+	 * @return der Glückswert als double
+	 */
 	public double getHappiness(){
 		double ret = 0;
 		for(CourseSlot cs : allCourses){
