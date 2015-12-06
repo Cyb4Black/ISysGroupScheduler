@@ -143,21 +143,8 @@ public class LocalBeamSearchThread extends Thread {
 	private boolean swapEveryStud(CourseSlot CS1, CourseSlot CS2) {
 
 		for (Student stud1 : CS1.getStudents()) {
-
-			
-			
 			
 			for (Student stud2 : CS2.getStudents()) {
-				
-				if((!CS2.isFilled()) && (  (getTheoryHappiness(CS1,stud1) + getTheoryHappiness(CS2, stud1))  >   (CS1.getHappiness() + CS2.getHappiness())  ) && stud2.gotTime(CS1.getTimeSlot()) ){
-					return moveStud(CS1, stud1, CS2);
-				}
-				
-				if((!CS1.isFilled()) && (  (getTheoryHappiness(CS1,stud2) + getTheoryHappiness(CS2, stud2))  >   (CS1.getHappiness() + CS2.getHappiness())  ) && stud1.gotTime(CS2.getTimeSlot()) ){
-					return moveStud(CS2, stud2, CS1);
-				}
-					
-					
 					
 				if ((getTheoryHappiness(CS1, stud1, stud1) + getTheoryHappiness(CS2, stud2, stud2) < getTheoryHappiness(CS1, stud2, stud1)+ getTheoryHappiness(CS2, stud1, stud2)) && stud1.gotTime(CS2.getTimeSlot()) && stud2.gotTime(CS1.getTimeSlot())) {
 
